@@ -44,16 +44,22 @@ bool execCommandline()
         
     while(commandTable[index].name != NULL)
     {
+        //~ printf("\n%s?%s", cmd, commandTable[index].name);
         if(!strcmp(commandTable[index].name, cmd))
         {
             ret_val = commandTable[index].hook();
+            //~ printf("found!\n");
             setMonitorContext();
+            
             return ret_val;
         }
         index++;
     }
+    //~ printf("ENF OF TABLE!\n");
         
-    return writeItpError(ITP_ERR_notFound);
+    printf("command '%s' not found!\n", cmd);
+    return ITP_FAILURE;
+    //~ return writeItpError(ITP_ERR_notFound);
 }
 
 bool execString(char* command)

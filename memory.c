@@ -342,13 +342,17 @@ bool memReadWord(word* value_ptr, FILE* fp)
 word memLoadFile(char* fname, word addr)
 {
     FILE *fp;
-    word read_size;
-    byte* target = memory + addr;
+    word read_size = 0;
     
     fp = fopen(fname, "rb");
     if (fp == NULL) 
 		return 0;
-	read_size = fread(target, sizeof(char), MEMORY_SIZE - addr, fp);
+
+    while(!feof(fp))
+    {
+        read_size += fread(memory + addr++, sizeof(char), 1, fp);
+    }
+    
 	fclose(fp);
 	return read_size;
 }

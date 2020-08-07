@@ -378,6 +378,13 @@ bool cmdReset()
     return ITP_SUCCESS;
 }
 
+bool cmdInitHardware()
+{
+    initHardware();
+    
+    return ITP_SUCCESS;
+}
+
 /************************/
 /* end of 6502 commands */
 /************************/
@@ -748,9 +755,9 @@ INTERPRETER_command listOfCommands[] =
     {"cvo", cmdConvertOct},        // convert an octal number
     {"cvb", cmdConvertBin},        // convert a binary number
 
-// 6502 emulator specific instructions
+    // 6502 emulator specific instructions
     
-    {"regs", cmdPrintRegisters},   // print 6502 registers
+    {"creset", cmdInitHardware},   // cold reset (reinitialize ALL)
     {"reset", cmdReset},           // reset 6502
     {"regs", cmdPrintRegisters},   // print 6502 registers
     {"pc", cmdSetPC},              // set 6502 program counter

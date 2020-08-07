@@ -6,5 +6,6 @@
 extern bool autoRun;
 extern bool verboseFlag;
 extern bool appStartFlag;
+extern void initHardware();
 
 #endif

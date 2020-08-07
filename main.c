@@ -2,6 +2,7 @@
 #include "console.h"
 #include "interpreter.h"
 #include "commands.h"
+#include "emulator.h"
 #include <stdio.h>
 #include <stdlib.h>
 //~ #include <stdint.h>
@@ -13,6 +14,8 @@
 
 // TODO: BUG pc seems to follow desassGetNextByte()!
 // TODO: BUG with io and unwired settings
+// TODO: BUG with creset (cold reset command)
+// TODO: bug with load file TEST.BIN, loads $200 bytes instead of $8000
 
 // TODO: HARDWARE
 // TODO: Real time clock
@@ -44,25 +47,28 @@ void splashScreen()
 
 void initHardware()
 {
-    //~ execString("wpoke fffa 123");
-    //~ execString("wpoke fffc 2004");
-    //~ execString("wpoke fffe 789");
-    //~ execString("poke be10 a9");
-    //~ execString("poke be11 a9");
-    //~ execString("poke be12 a9");
-    //~ execString("poke be13 a9");
-    //~ execString("poke ffe0 a9");
+    // HARDWARE COLD RESET
     
+    // disconnect all
     memSetUnwired(0, 0x10000);
+    
+    // add some RAM
     memSetRam(0x0, 0xef00);
+    
+    // add some ROM
     memSetRom(0xf000, 0x1000);
+    
+    // add some ios
     memSetOutput(VOSC_IO_PUTSCR, putscr);
     memSetInput(VOSC_IO_GETKEY, getkey);    
     memSetOutput(VOSC_IO_INITRAND, initrand);
     memSetInput(VOSC_IO_GETRAND, getrand);  
-
-    execString("reset");
-
+    
+    // clear all break points
+    memClrBreaks();
+    
+    // reset the 6502
+    reset6502();
 }
 
 int parseArguments(int argc, char* argv[])
