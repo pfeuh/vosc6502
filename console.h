@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include "types.h"
 
 #define CONSOLE_SUCCESS false
 #define CONSOLE_FAILURE true
@@ -42,6 +42,7 @@ extern bool isParameterOk();
 extern void setMonitorContext();
 extern void setEmulatorContext();
 extern void setBreakContext();
+extern void setInterruptContext();
 
 #endif
 

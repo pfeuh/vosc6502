@@ -19,7 +19,12 @@ void setEmulatorContext()
 
 void setBreakContext()
 {
-    printf("%c[%sm", CHAR_ESCAPE, COLOR_BOLD_GREEN);
+    printf("%c[%sm", CHAR_ESCAPE, COLOR_RED);
+}
+
+void setInterruptContext()
+{
+    printf("%c[%sm", CHAR_ESCAPE, COLOR_GREEN);
 }
 
 bool isParameterOk()

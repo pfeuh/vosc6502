@@ -1,7 +1,5 @@
 
 #include <stdio.h>
-//~ #include "fake6502.h"
-//~ #include "types.h"
 #include "emulator.h"
 #include "memory.h"
 #include "desass6502.h"
@@ -109,3 +107,12 @@ void setunused()
     status |= FLAG_CONSTANT;
 }
 
+bool hasInterrupt()
+{
+    return ((FLAG_INTERRUPT & status) != 0);
+}
+
+bool hasBreak()
+{
+    return ((FLAG_BREAK & status) != 0);
+}

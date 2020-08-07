@@ -11,8 +11,10 @@
 
 #define PROMPT ">"
 
-// TODO; BUG sp seems to follow desassGetNextByte()!
-// TODO; BUG with io and unwired settings
+// TODO: BUG sp seems to follow desassGetNextByte()!
+// TODO: BUG with io and unwired settings
+// TODO: nice to have a conversion command
+
 // TODO: HARDWARE
 // TODO: Real time clock
 // TODO: UART
@@ -61,20 +63,6 @@ void initHardware()
 
     execString("reset");
 
-    memPut(VOSC_IO_PUTSCR, 'H');
-    memPut(VOSC_IO_PUTSCR, 'e');
-    memPut(VOSC_IO_PUTSCR, 'l');
-    memPut(VOSC_IO_PUTSCR, 'l');
-    memPut(VOSC_IO_PUTSCR, 'o');
-    memPut(VOSC_IO_PUTSCR, ',');
-    memPut(VOSC_IO_PUTSCR, ' ');
-    memPut(VOSC_IO_PUTSCR, 'W');
-    memPut(VOSC_IO_PUTSCR, 'o');
-    memPut(VOSC_IO_PUTSCR, 'r');
-    memPut(VOSC_IO_PUTSCR, 'l');
-    memPut(VOSC_IO_PUTSCR, 'd');
-    memPut(VOSC_IO_PUTSCR, '!');
-    memPut(VOSC_IO_PUTSCR, '\n');
 }
 
 int parseArguments(int argc, char* argv[])
@@ -83,7 +71,6 @@ int parseArguments(int argc, char* argv[])
     
     while(idx < argc)
     {
-        //~ printf("%s\n", argv[idx]);
         if(!strcmp(argv[idx], "-bat"))
         {
             idx++;
@@ -106,9 +93,8 @@ int main(int argc, char* argv[])
     setMonitorContext();
     splashScreen();
     setupCommandTable(listOfCommands);
-    initHardware();
-
     parseArguments(argc, argv);
+    initHardware();
     
     appStartFlag = false;
     execString("regs");

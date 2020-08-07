@@ -8,12 +8,13 @@ void find(byte* pattern, word pattern_size)
 {
     int addr = 0;
     bool found;
+    word total = 0;
     word index;
     
-    printf("<");
+    printf("Searching for ");
     for(index = 0; index < pattern_size; index++)
         printf("%02X ", pattern[index]);
-    printf(">\n");
+    printf("\n");
     
     while(addr < (MEMORY_SIZE - pattern_size + 1))
     {
@@ -35,8 +36,15 @@ void find(byte* pattern, word pattern_size)
             }
         }
         if(found)
+        {
             printf("%04X ", addr);
+            total++;
+        }
         addr++;
     }
+    if(total)
+        printf("%04X occurences found\n", total);
+    else
+        printf("nothing found\n");
 }
 

@@ -2,7 +2,6 @@
 #define MEMORY_H
 
 #include "types.h"
-#include <stdbool.h>
 
 #define MEMORY_SUCCESS false
 #define MEMORY_FAILURE true

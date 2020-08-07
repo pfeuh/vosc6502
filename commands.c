@@ -8,43 +8,44 @@
 #include "desass6502.h"
 #include "emulator.h"
 #include "finder.h"
+#include "main.h"
 
 char batBuffer[COMMANDLINE_BUF_SIZE];
 byte finderPattern[FINDER_PATTERN_SIZE];
 word finderPatternSize;
 word finderPatternIndex;
 
+void enterEmulation()
+{
+    setEmulatorContext();
+}
+
+void exitEmulation()
+{
+    if(hasBreak())
+        setBreakContext();
+
+    else if(hasInterrupt())
+        setInterruptContext();
+
+    else
+        setMonitorContext();
+
+    printRegisters();
+}
+
+
+void displayVerboseFlag()
+{
+    if(verboseFlag)
+        printf("verbose flag is ON\n");
+    else
+        printf("verbose flag is OFF\n");
+}
+
 /*****************/
 /* 6502 commands */
 /*****************/
-
-bool cmdFind()
-{
-    byte value;
-    
-    finderPatternSize = 0;
-
-    value  = getHexNumber();
-    if(!isParameterOk())
-        return writeItpError(ITP_ERR_badNumeric);
-    
-    finderPattern[finderPatternSize++] = value;
-    printf("Finding %02X", value);
-    
-    while (1)
-    {
-        value  = getHexNumber();
-        if(!isParameterOk())
-            break;
-        finderPattern[finderPatternSize++] = value;
-        printf(" %02X", value);
-    }
-    printf("...\n");
-    
-    find(finderPattern, finderPatternSize);
-    
-    return ITP_SUCCESS;
-}
 
 bool cmdRun()
 {
@@ -56,17 +57,31 @@ bool cmdRun()
     else
         pc = value;
     
+    enterEmulation();
     while(1)
     {
         step6502();
         if(memIsBreak(pc))
-        {
-            setBreakContext();
             break;
-        }
     }
+    exitEmulation();
     
-    printRegisters();
+    return ITP_SUCCESS;
+}
+
+bool cmdStep()
+{
+    word value;
+    
+    value  = getHexNumber();
+    if(!isParameterOk());
+        // whithout parameter, program counter (run address) is not modified
+    else
+        pc = value;
+    
+    enterEmulation();
+    step6502();
+    exitEmulation();
     
     return ITP_SUCCESS;
 }
@@ -297,16 +312,6 @@ bool cmdReset()
     return ITP_SUCCESS;
 }
 
-bool cmdStep()
-{
-    setEmulatorContext();
-    step6502();
-    setMonitorContext();
-    printRegisters();
-    
-    return ITP_SUCCESS;
-}
-
 /************************/
 /* end of 6502 commands */
 /************************/
@@ -397,6 +402,23 @@ bool cmdSetBreak()
         value = true;
     
     memSetBreak(addr, value);
+    return ITP_SUCCESS;
+}
+
+bool cmdVerboseFlag()
+{
+    bool value;
+    
+    value = getHexNumber();
+    // let the parameter be optional
+    if(isParameterOk())
+    {
+        if(value)
+            verboseFlag = true;
+        else
+            verboseFlag = false;
+    }
+    displayVerboseFlag();
     return ITP_SUCCESS;
 }
 
@@ -575,6 +597,34 @@ bool cmdBat()
     return ITP_SUCCESS;
 }
 
+bool cmdFind()
+{
+    byte value;
+    
+    finderPatternSize = 0;
+
+    value  = getHexNumber();
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+    
+    finderPattern[finderPatternSize++] = value;
+    //~ printf("Searching for %02X", value);
+    
+    while (1)
+    {
+        value  = getHexNumber();
+        if(!isParameterOk())
+            break;
+        finderPattern[finderPatternSize++] = value;
+        //~ printf(" %02X", value);
+    }
+    //~ printf("...\n");
+    
+    find(finderPattern, finderPatternSize);
+    
+    return ITP_SUCCESS;
+}
+
 bool cmdLoadAtariFile()
 {
     word size;
@@ -616,6 +666,7 @@ INTERPRETER_command listOfCommands[] =
     {"map", cmdMemMap},            // mapping of used ram
     {"u", cmdDesass},              // unassemble a piece of memory
     {"bat", cmdBat},               // execute a batch file
+    {"vf", cmdVerboseFlag},        // display set or clear verbose flag
     {"f", cmdFind},                // find a pattern in memory
 
 // 6502 emulator specific instructions

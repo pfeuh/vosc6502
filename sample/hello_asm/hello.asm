@@ -1,6 +1,6 @@
             .export _main
             
-            VOSC_IO_PUTSCR = $fe00
+            VOSC_IO_PUTSCR = $bf00
 
             ; * = $600
 _main:      

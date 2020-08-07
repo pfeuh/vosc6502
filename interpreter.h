@@ -11,7 +11,7 @@
 #define ITP_ERR_notFound     4
 #define ITP_ERR_fileNotFound 5
 
-#include <stdbool.h>
+#include "types.h"
 
 typedef bool (*INTERPRETER_HOOK)(void);
 

@@ -1,7 +1,6 @@
 #ifndef DUMP_H
 #define DUMP_H
 
-#include <stdbool.h>
 #include "types.h"
 
 #define DUMP_NB_COLUMNS 16

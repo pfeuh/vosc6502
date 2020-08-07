@@ -1,5 +1,6 @@
 
 #include "memory.h"
+#include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -11,6 +12,7 @@
 #define MEMORY_UNWIRED 5
 
 #define MEMORY_ATARI_FILE_SIGNATURE 0xffff
+#define MEMORY_ATARI_FILE_NB_SHOWED 8
 
 byte memory[MEMORY_SIZE];
 bool memBreaks[MEMORY_SIZE];
@@ -268,8 +270,8 @@ byte memGet(word addr)
             value = memory[addr];
             break;
         case MEMORY_INPUT:
-            value = memInputs[addr]();
         case MEMORY_INOUT:
+            value = memInputs[addr]();
         case MEMORY_UNWIRED:
         case MEMORY_OUTPUT:
             value = MEMORY_UNWIRED_VALUE;
@@ -343,11 +345,13 @@ word memLoadAtariFile(char* fname)
 {
     FILE *fp;
     word read_size = 0;
-    word count;
+    int count;
     word magic_word;
     word first;
     word last;
     byte value;
+    word index;
+    word displayed_bytes;
     
     fp = fopen(fname, "rb");
     if (fp == NULL) 
@@ -387,8 +391,9 @@ word memLoadAtariFile(char* fname)
         }
         read_size += 2;
         
-        printf("loading bloc %04x:%04x\n", first, last);
-        
+        if(verboseFlag)
+            printf("loading bloc [%04x:%04x]", first, last);
+        index = first;
         count = 1 + last - first;
 
         // read whole bloc
@@ -400,12 +405,33 @@ word memLoadAtariFile(char* fname)
                 fclose(fp);
                 return read_size;
             }
-            memPut(first++, value);
+            memPut(index++, value);
             read_size++;
+        }
+
+        if(verboseFlag)
+        {
+            // display first bytes of bloc
+            index = first;
+            displayed_bytes = 0;
+            while(index <= last)
+            {
+                printf(" %02X", memGet(index++));
+                displayed_bytes++;
+                if(displayed_bytes == MEMORY_ATARI_FILE_NB_SHOWED)
+                {
+                    printf(" ...");
+                    break;
+                }
+            }
+            printf("\n");
         }
     }
     
 	fclose(fp);
+    
+    if(verboseFlag) printf("program start address is %04X", memGetW(0x2e0));
+
 	return read_size;
 }
 
