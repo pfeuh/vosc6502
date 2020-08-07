@@ -43,6 +43,51 @@ void displayVerboseFlag()
         printf("verbose flag is OFF\n");
 }
 
+bool showConvert(word base)
+{
+    int  idx;
+    int  weight = 0x8000;
+    bool started = false;
+    int raw_value;
+    word value;
+    
+    raw_value  = getNumber(base);
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+    
+    value = raw_value;
+    if(value != raw_value)
+        return writeItpError(ITP_ERR_outOfRange);
+        
+    
+    printf("hex:%X dec:%d oct:%o", value, value, value);
+    
+    printf(" bin:");
+    if(!value)
+            printf("0");
+    else
+    {
+        for(idx = 0; idx < 16; idx++)
+        {
+            if((value & weight) == weight)
+            {
+                started = true;
+                printf("1");
+            }
+            else if(started)
+                printf("0");
+            weight >>= 1;
+        }
+    }
+    
+    if((value >= 32) && (value < 128))
+        printf(" ch:'%c'", value);
+    
+    printf("\n");
+    
+    return ITP_SUCCESS;
+}
+
 /*****************/
 /* 6502 commands */
 /*****************/
@@ -375,6 +420,30 @@ void bat(char* fname)
 /* MONITOR COMMANDS */
 /********************/
 
+bool cmdConvertHex()
+{
+    showConvert(16);
+    return ITP_SUCCESS;
+}
+
+bool cmdConvertDec()
+{
+    showConvert(10);
+    return ITP_SUCCESS;
+}
+
+bool cmdConvertOct()
+{
+    showConvert(8);
+    return ITP_SUCCESS;
+}
+
+bool cmdConvertBin()
+{
+    showConvert(2);
+    return ITP_SUCCESS;
+}
+
 bool cmdMemMap()
 {
     memMap();
@@ -656,7 +725,7 @@ INTERPRETER_command listOfCommands[] =
     {"wpeek", cmdWpeek},           // display a word of memory
     {"poke", cmdPoke},             // set a byte of memory
     {"wpoke", cmdWpoke},           // set a word of memory
-    {"d", cmdDump},             // display a piece of memory
+    {"d", cmdDump},                // display a piece of memory
     {"load", cmdLoadFile},         // put a binary file in memory 
     {"ataload", cmdLoadAtariFile}, // put an Atari binary file in memory 
     {"sb", cmdSetBreak},           // set/clear a breakpoint
@@ -668,6 +737,10 @@ INTERPRETER_command listOfCommands[] =
     {"bat", cmdBat},               // execute a batch file
     {"vf", cmdVerboseFlag},        // display set or clear verbose flag
     {"f", cmdFind},                // find a pattern in memory
+    {"cvh", cmdConvertHex},        // convert an hexadecimal number
+    {"cvd", cmdConvertDec},        // convert a decimal number
+    {"cvo", cmdConvertOct},        // convert an octal number
+    {"cvb", cmdConvertBin},        // convert a binary number
 
 // 6502 emulator specific instructions
     

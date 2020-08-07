@@ -10,6 +10,7 @@
 #define ITP_ERR_noCmdTable   3
 #define ITP_ERR_notFound     4
 #define ITP_ERR_fileNotFound 5
+#define ITP_ERR_outOfRange   6
 
 #include "types.h"
 

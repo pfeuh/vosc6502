@@ -11,9 +11,8 @@
 
 #define PROMPT ">"
 
-// TODO: BUG sp seems to follow desassGetNextByte()!
+// TODO: BUG pc seems to follow desassGetNextByte()!
 // TODO: BUG with io and unwired settings
-// TODO: nice to have a conversion command
 
 // TODO: HARDWARE
 // TODO: Real time clock

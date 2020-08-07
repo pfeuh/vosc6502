@@ -79,6 +79,81 @@ char* getNextParameter()
         return parameterBuf;
 }
 
+unsigned int getNumber(byte base)
+{
+    char* input_ptr = getNextParameter();
+    unsigned int ret_val = 0;
+    char car;
+    unsigned int digit;
+    
+    if(input_ptr == NULL)
+    {
+        parameterOkFlag = false;
+        return 0;
+    }
+    
+    parameterOkFlag = true;
+
+    while(*input_ptr)
+    {
+        car = *input_ptr++;
+        switch(car)
+        {
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                digit = car - '0';
+                if(base <= digit)
+                {
+                    parameterOkFlag = false;
+                    return 0;
+                }
+                ret_val = ret_val * base + digit;
+                break;
+            case 'a':
+            case 'b':
+            case 'c':
+            case 'd':
+            case 'e':
+            case 'f':
+                digit = car - 'a' + 10;
+                if(base <= digit)
+                {
+                    parameterOkFlag = false;
+                    return 0;
+                }
+                ret_val = ret_val * base + digit;
+                break;
+            case 'A':
+            case 'B':
+            case 'C':
+            case 'D':
+            case 'E':
+            case 'F':
+                digit = car - 'A' + 10;
+                if(base <= digit)
+                {
+                    parameterOkFlag = false;
+                    return 0;
+                }
+                ret_val = ret_val * base + digit;
+                break;
+            default:
+                parameterOkFlag = false;
+                return 0;
+                break;
+        }
+    }
+    return ret_val;
+}
+
 unsigned int getHexNumber()
 {
     char* input_ptr = getNextParameter();

@@ -36,6 +36,7 @@ extern int  commandlineIndex;
 extern bool feedCommandline();
 extern bool copyCommandline(char* command);
 extern char* getNextParameter();
+unsigned int getNumber(byte base);
 extern unsigned int getHexNumber();
 
 extern bool isParameterOk();
