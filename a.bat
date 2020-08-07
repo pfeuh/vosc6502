@@ -1,0 +1,1 @@
+load sample/testcc65segments/TEST.BIN 0

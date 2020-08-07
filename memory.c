@@ -52,6 +52,18 @@ void memSetRom(int addr, int size)
         memType[addr++] = MEMORY_ROM;
 }
 
+void memSetRam(int addr, int size)
+{
+    if((addr + size ) > MEMORY_SIZE)
+    {
+        printf("Memory bloc out of range!\n");
+        return;
+    }
+    
+    while(size--)
+        memType[addr++] = MEMORY_RAM;
+}
+
 void memSetUnwired(int addr, int size)
 {
     if((addr + size ) > MEMORY_SIZE)

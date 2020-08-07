@@ -27,7 +27,7 @@
 #define COLOR_BOLD_CYAN    "1;36"
 #define COLOR_DEFAULT      "0"
 
-#define COMMANDLINE_SIZE 80
+#define COMMANDLINE_SIZE 8192
 #define COMMANDLINE_BUF_SIZE (COMMANDLINE_SIZE + 1)
 
 extern char commandlineBuf[COMMANDLINE_BUF_SIZE];

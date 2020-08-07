@@ -29,8 +29,8 @@
 #define VOSC_IO_GETKEY 0xbf00
 
 #include "random.h"
-#define VOSC_IO_INITRAND 0xbf80
-#define VOSC_IO_GETRAND  0xbf80
+#define VOSC_IO_INITRAND 0xef80
+#define VOSC_IO_GETRAND  0xef80
 
 bool autoRun = false;
 bool verboseFlag = false;
@@ -44,17 +44,18 @@ void splashScreen()
 
 void initHardware()
 {
-    execString("wpoke fffa 123");
-    execString("wpoke fffc 2004");
-    execString("wpoke fffe 789");
-    execString("poke be10 a9");
-    execString("poke be11 a9");
-    execString("poke be12 a9");
-    execString("poke be13 a9");
-    execString("poke ffe0 a9");
+    //~ execString("wpoke fffa 123");
+    //~ execString("wpoke fffc 2004");
+    //~ execString("wpoke fffe 789");
+    //~ execString("poke be10 a9");
+    //~ execString("poke be11 a9");
+    //~ execString("poke be12 a9");
+    //~ execString("poke be13 a9");
+    //~ execString("poke ffe0 a9");
     
-    memSetRom(0xc000, 0x4000);
-    memSetUnwired(0xbf00, 0x100);
+    memSetUnwired(0, 0x10000);
+    memSetRam(0x0, 0xef00);
+    memSetRom(0xf000, 0x1000);
     memSetOutput(VOSC_IO_PUTSCR, putscr);
     memSetInput(VOSC_IO_GETKEY, getkey);    
     memSetOutput(VOSC_IO_INITRAND, initrand);

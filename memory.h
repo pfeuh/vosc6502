@@ -13,6 +13,7 @@
 //~ typedef void(*hook)(byte value);
 
 extern void memSetRom(int addr, int size);
+extern void memSetRam(int addr, int size);
 extern void memSetUnwired(int addr, int size);
 extern void memSetOutput(word addr, void(*hook)(byte value));
 extern void memSetInput(word addr, byte(*hook)(void));
