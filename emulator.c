@@ -49,7 +49,7 @@ void printRegisters()
         printf("C _ ");
     else
         printf(". _ ");
-    desass(pc, 1);
+    desassOneLine(pc);
 }
 
 void setPC(word addr)

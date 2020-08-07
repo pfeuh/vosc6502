@@ -15,7 +15,8 @@ enum displayMode
 };
 
 extern void desassSetMode(enum displayMode mode);
-extern void desass(word addr, word nb_lines);
+extern void desassOneLine(word addr);
+extern void desass(word nb_lines);
 
 // these functions have to be provided by the application
 extern void desassSetAddr(word add);

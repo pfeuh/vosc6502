@@ -4,14 +4,14 @@
 
 enum displayMode SHOW_MODE = MODE_ASM;
 
-// meno table is at the end of this file
+// mnenonics table & functions table are at the end of this file
 extern const char* mnemo[];
 extern void(*hook[])(void);
 
-word pc;
-byte opcode;
-byte b2;
-byte b3;
+word desassPC;
+byte desassOpcode;
+byte desassB2;
+byte desassB3;
 
 void setMode(enum displayMode mode)
 {
@@ -71,24 +71,24 @@ void byte2hex(byte value)
 word getRel(byte rel_jmp)
 {
         if(rel_jmp < 128)
-            return pc + 2 + rel_jmp;
+            return desassPC + 2 + rel_jmp;
         else
-            return pc + 2 - 256 + rel_jmp;
+            return desassPC + 2 - 256 + rel_jmp;
 }
 
 void Add1Value()
 {
-    printf("%04X %02X       %s ", pc, opcode, mnemo[opcode]);
+    printf("%04X %02X       %s ", desassPC, desassOpcode, mnemo[desassOpcode]);
 }
 
 void Add2Values()
 {
-    printf("%04X %02X %02X    %s ", pc, opcode, b2, mnemo[opcode]);
+    printf("%04X %02X %02X    %s ", desassPC, desassOpcode, desassB2, mnemo[desassOpcode]);
 }
 
 void Add3Values()
 {
-    printf("%04X %02X %02X %02X %s ", pc, opcode, b2, b3, mnemo[opcode]);
+    printf("%04X %02X %02X %02X %s ", desassPC, desassOpcode, desassB2, desassB3, mnemo[desassOpcode]);
 }
 
     //----------------//
@@ -97,10 +97,10 @@ void Add3Values()
 
 void immediate()
 {
-    b2 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
     Add2Values();
     printf("#");
-    byte2hex(b2);
+    byte2hex(desassB2);
     printf("\n");
 }
 
@@ -112,106 +112,108 @@ void inherent()
 
 void zeropage()
 {
-    b2 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
     Add2Values();
-    byte2hex(b2);
+    byte2hex(desassB2);
     printf("\n");
 }
 
 void zeropagex()
 {
-    b2 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
     Add2Values();
-    byte2hex(b2);
+    byte2hex(desassB2);
     printf(",X\n");
 }
 
 void zeropagey()
 {
-    b2 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
     Add2Values();
-    byte2hex(b2);
+    byte2hex(desassB2);
     printf(",Y\n");
 }
 
 void indzerox()
 {
-    b2 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
     Add2Values();
     printf("(");
-    byte2hex(b2);
+    byte2hex(desassB2);
     printf(",X)\n");
 }
 
 void indzeroy()
 {
-    b2 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
     Add2Values();
     printf("(");
-    byte2hex(b2);
+    byte2hex(desassB2);
     printf("),Y\n");
 }
 
 void absolute()
 {
-    b2 = desassGetNextByte();
-    b3 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
+    desassB3 = desassGetNextByte();
     Add3Values();
-    word2hex(b3*256+b2);
+    word2hex(desassB3*256+desassB2);
     printf("\n");
 }
 
 void absolx()
 {
-    b2 = desassGetNextByte();
-    b3 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
+    desassB3 = desassGetNextByte();
     Add3Values();
-    word2hex(b3*256+b2);
+    word2hex(desassB3*256+desassB2);
     printf(",X\n");
 }
 
 void absoly()
 {
-    b2 = desassGetNextByte();
-    b3 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
+    desassB3 = desassGetNextByte();
     Add3Values();
-    word2hex(b3*256+b2);
+    word2hex(desassB3*256+desassB2);
     printf(",Y\n");
 }
 
 void indirect()
 {
-    b2 = desassGetNextByte();
-    b3 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
+    desassB3 = desassGetNextByte();
     Add3Values();
     printf("(");
-    word2hex(b3*256+b2);
+    word2hex(desassB3*256+desassB2);
     printf(")\n");
 }
 
 void relative()
 {
-    b2 = desassGetNextByte();
+    desassB2 = desassGetNextByte();
     Add2Values();
-    word2hex(getRel(b2));
+    word2hex(getRel(desassB2));
     printf("\n");
 }
 
 void desassOneLine(word addr)
 {
+    word old_addr = desassGetAddr();
     desassSetAddr(addr);
-    pc = addr;
-    opcode = desassGetNextByte();
-    hook[opcode]();
+    desassPC = addr;
+    desassOpcode = desassGetNextByte();
+    hook[desassOpcode]();
+    desassSetAddr(old_addr);
 }
 
-void desass(word addr, word nb_lines)
+void desass(word nb_lines)
 {
-    desassSetAddr(addr);
     while(nb_lines--)
     {
-        addr = desassGetAddr();
-        desassOneLine(addr);
+        desassPC = desassGetAddr();
+        desassOpcode = desassGetNextByte();
+        hook[desassOpcode]();
     }
 }
 

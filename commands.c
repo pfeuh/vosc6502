@@ -14,6 +14,8 @@ char batBuffer[COMMANDLINE_BUF_SIZE];
 byte finderPattern[FINDER_PATTERN_SIZE];
 word finderPatternSize;
 word finderPatternIndex;
+word desassPointer = 0x200;
+word dumpPointer = 0;
 
 void enterEmulation()
 {
@@ -31,6 +33,7 @@ void exitEmulation()
     else
         setMonitorContext();
 
+    desassPointer = pc;
     printRegisters();
 }
 
@@ -86,6 +89,24 @@ bool showConvert(word base)
     printf("\n");
     
     return ITP_SUCCESS;
+}
+
+// this function has to be provided to desass6502
+word desassGetAddr()
+{
+    return desassPointer;
+}
+
+// this function has to be provided to desass6502
+void desassSetAddr(word addr)
+{
+    desassPointer = addr;
+}
+
+// this function has to be provided to desass6502
+byte desassGetNextByte()
+{
+    return memGet(desassPointer++);
 }
 
 /*****************/
@@ -361,26 +382,6 @@ bool cmdReset()
 /* end of 6502 commands */
 /************************/
 
-word dessasStackPointer;
-
-// this function has to be provided to desass6502
-word desassGetAddr()
-{
-    return dessasStackPointer;
-}
-
-// this function has to be provided to desass6502
-void desassSetAddr(word addr)
-{
-    dessasStackPointer = addr;
-}
-
-// this function has to be provided to desass6502
-byte desassGetNextByte()
-{
-    return memGet(dessasStackPointer++);
-}
-
 void bat(char* fname)
 {
     FILE *fp;
@@ -508,10 +509,13 @@ bool cmdDump()
     word addr;
     
     addr  = getHexNumber();
-    if(!isParameterOk())
-        return writeItpError(ITP_ERR_badNumeric);
+    if(isParameterOk())
+        // optional parameter
+        dumpPointer = addr;
     
-    dump(addr, memGet);
+    dump(dumpPointer, memGet);
+    dumpPointer += DUMP_NB_BYTES;
+    
     return ITP_SUCCESS;
 }
 
@@ -608,19 +612,21 @@ bool cmdDesass()
     addr  = getHexNumber();
     if(!isParameterOk())
     {
-        // OK to ommit first parameter
-        addr = pc;
+        // OK to ommit first parameter, let's set second one
         nb_lines = 10;
     }
     else
     {
+        // first parameter is OK, let's give it to the disassembler
+        desassSetAddr(addr);
+        
         nb_lines  = getHexNumber(); 
         if(!isParameterOk())
             // OK to ommit second parameter
             nb_lines = 10;
     }
     
-    desass(addr,nb_lines);
+    desass(nb_lines);
 
     return ITP_SUCCESS;
 }

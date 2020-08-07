@@ -36,7 +36,7 @@ void dump(word addr, byte(*getbyte_hook)(word addr))
         addr++;
         counter++;
         
-        if(counter == DUMP_MAX_BYTES)
+        if(counter == DUMP_NB_BYTES)
             break;
     }
 }
