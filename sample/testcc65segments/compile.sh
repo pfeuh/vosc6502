@@ -4,6 +4,7 @@ cd ./
 
 #~ cl65 -O -t atari test.asm -o TEST.BIN
 cl65 -O -t gamate test.asm -o TEST.BIN
+cl65 -O -t atari print.asm -o PRINT.BIN
 
 errnum=$?
 if test $errnum -eq 0;then

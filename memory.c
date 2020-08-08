@@ -343,15 +343,14 @@ word memLoadFile(char* fname, word addr)
 {
     FILE *fp;
     word read_size = 0;
+    byte value
     
     fp = fopen(fname, "rb");
     if (fp == NULL) 
 		return 0;
 
     while(!feof(fp))
-    {
         read_size += fread(memory + addr++, sizeof(char), 1, fp);
-    }
     
 	fclose(fp);
 	return read_size;

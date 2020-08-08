@@ -1,1 +1,1 @@
-load sample/testcc65segments/TEST.BIN 0
+load sample/testcc65segments/DUMMYROM f000

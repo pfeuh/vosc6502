@@ -12,10 +12,8 @@
 
 #define PROMPT ">"
 
-// TODO: BUG pc seems to follow desassGetNextByte()!
 // TODO: BUG with io and unwired settings
-// TODO: BUG with creset (cold reset command)
-// TODO: bug with load file TEST.BIN, loads $200 bytes instead of $8000
+// TODO: add pokeROM/loadROM functions
 
 // TODO: HARDWARE
 // TODO: Real time clock
