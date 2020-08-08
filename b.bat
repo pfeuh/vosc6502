@@ -1,3 +1,3 @@
 ataload sample/testcc65segments/PRINT.BIN
-sb 2088
-pc 206f
+sb 2076
+wpokerom fffc 2076

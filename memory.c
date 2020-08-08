@@ -4,13 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MEMORY_RAM     0
-#define MEMORY_ROM     1
-#define MEMORY_INPUT   2
-#define MEMORY_OUTPUT  3
-#define MEMORY_INOUT   4
-#define MEMORY_UNWIRED 5
-
 #define MEMORY_ATARI_FILE_SIGNATURE 0xffff
 #define MEMORY_ATARI_FILE_NB_SHOWED 8
 
@@ -49,7 +42,11 @@ void memSetRom(int addr, int size)
     }
     
     while(size--)
-        memType[addr++] = MEMORY_ROM;
+    {
+        memType[addr] = MEMORY_ROM;
+        memory[addr] = ROM_DEFAULT_BYTE;
+        addr++;
+    }
 }
 
 void memSetRam(int addr, int size)
@@ -309,6 +306,14 @@ void memPut(word addr, byte value)
     }
 }
 
+void memPutRom(word addr, byte value)
+{
+    if((memType[addr]) == MEMORY_ROM)
+    {
+            memory[addr] = value;
+    }
+}
+
 byte memGetW(word addr)
 {
     return memGet(addr) + 256 *  memGet(addr+1);
@@ -318,6 +323,12 @@ void memPutW(word addr, word value)
 {
     memPut(addr, value & 255);
     memPut(addr+1, value / 256);
+}
+
+void memPutWRom(word addr, word value)
+{
+    memPutRom(addr, value & 255);
+    memPutRom(addr+1, value / 256);
 }
 
 bool memReadWord(word* value_ptr, FILE* fp)
@@ -339,7 +350,7 @@ bool memReadWord(word* value_ptr, FILE* fp)
     return MEMORY_SUCCESS;
 }
 
-word memLoadFile(char* fname, word addr)
+word memLoadFile(char* fname, word addr, byte mem_type)
 {
     FILE *fp;
     word read_size = 0;
@@ -355,7 +366,17 @@ word memLoadFile(char* fname, word addr)
     {
         if(fread(&value, sizeof(char), 1, fp))
         {
-            memPut(addr++, value);
+            switch(mem_type)
+            {
+                case MEMORY_RAM:
+                    memPut(addr++, value);
+                    break;
+                case MEMORY_ROM:
+                    memPutRom(addr++, value);
+                    break;
+                default:
+                    break;
+            }
         }
     }
     

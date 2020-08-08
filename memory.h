@@ -9,8 +9,14 @@
 #define MEMORY_SIZE 0x10000
 #define MEMORY_BREAKS_PER_LINE 8
 #define MEMORY_UNWIRED_VALUE 0xff
+#define ROM_DEFAULT_BYTE 0xff
 
-//~ typedef void(*hook)(byte value);
+#define MEMORY_RAM     0
+#define MEMORY_ROM     1
+#define MEMORY_INPUT   2
+#define MEMORY_OUTPUT  3
+#define MEMORY_INOUT   4
+#define MEMORY_UNWIRED 5
 
 extern void memSetRom(int addr, int size);
 extern void memSetRam(int addr, int size);
@@ -42,8 +48,10 @@ extern byte memGet(word addr);
 extern void memPut(word addr, byte value);
 extern byte memGetW(word addr);
 extern void memPutW(word addr, word value);
+extern void memPutRom(word addr, byte value);
+extern void memPutWRom(word addr, word value);
 
-extern word memLoadFile(char* fname, word addr);
+extern word memLoadFile(char* fname, word addr, byte mem_type);
 extern word memLoadAtariFile(char* fname);
 
 #endif

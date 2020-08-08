@@ -15,7 +15,7 @@ char DUMP_getAscii(char value)
         return '.';
 }
 
-void dump(word addr, byte(*getbyte_hook)(word addr))
+void dump(word addr, byte(*getbyte_hook)(word addr), word size)
 {
     word counter = 0;
     byte octet;
@@ -36,8 +36,15 @@ void dump(word addr, byte(*getbyte_hook)(word addr))
         addr++;
         counter++;
         
-        if(counter == DUMP_NB_BYTES)
+        if(counter == size)
             break;
+    }
+    if((counter % DUMP_NB_COLUMNS) != 0)
+    {
+        while((counter++ % DUMP_NB_COLUMNS) != 0)
+            printf("   ");
+        printf("%s\n", DUMP_scibuf);
+        
     }
 }
 

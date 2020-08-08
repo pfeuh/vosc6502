@@ -16,6 +16,7 @@ word finderPatternSize;
 word finderPatternIndex;
 word desassPointer = 0x200;
 word dumpPointer = 0;
+word dumpSize = DUMP_NB_BYTES;
 
 void enterEmulation()
 {
@@ -514,14 +515,19 @@ bool cmdClrBreaks()
 bool cmdDump()
 {
     word addr;
+    word size;
     
-    addr  = getHexNumber();
+    addr = getHexNumber();
     if(isParameterOk())
         // optional parameter
         dumpPointer = addr;
     
-    dump(dumpPointer, memGet);
-    dumpPointer += DUMP_NB_BYTES;
+    size = getHexNumber();
+    if(isParameterOk())
+        // optional parameter
+        dumpSize = size;
+    
+    dump(dumpPointer, memGet, dumpSize);
     
     return ITP_SUCCESS;
 }
@@ -611,6 +617,72 @@ bool cmdWpoke()
     return ITP_SUCCESS;
 }
 
+bool cmdWpokeRom()
+{
+    word addr;
+    byte value;
+    
+    addr  = getHexNumber();
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+    
+    value  = getHexNumber(); 
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+
+    memPut(addr++, value);
+
+    // extra parameters
+    while(1)
+    {
+        value  = getHexNumber(); 
+        if(!isParameterOk())
+            return ITP_SUCCESS;
+
+        //~ memPut(addr++, value);
+        memPutRom(addr++, value);
+    }
+    
+    return ITP_SUCCESS;
+}
+
+bool cmdPokeRom()
+{
+
+    return ITP_SUCCESS;
+}
+
+bool cmdWPokeRom()
+{
+
+    word addr;
+    word value;
+    
+    addr  = getHexNumber();
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+    
+    value  = getHexNumber(); 
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+
+    memPutRom(addr++, value & 255);
+    memPutRom(addr++, value / 256);
+
+    // extra parameters
+    while(1)
+    {
+        value  = getHexNumber(); 
+        if(!isParameterOk())
+            return ITP_SUCCESS;
+
+        memPutRom(addr++, value & 255);
+        memPutRom(addr++, value / 256);
+    }
+    
+    return ITP_SUCCESS;
+}
+
 bool cmdDesass()
 {
     word addr;
@@ -657,7 +729,7 @@ bool cmdLoadFile()
     if(!isParameterOk())
         addr = 0;
     
-    size = memLoadFile(fname, addr);
+    size = memLoadFile(fname, addr, MEMORY_RAM);
     if(!size)
         return writeItpError(ITP_ERR_fileNotFound);
     printf("%d bytes loaded\n", size);    
@@ -736,8 +808,10 @@ INTERPRETER_command listOfCommands[] =
     {"bye", cmdQuitApp},           // quit application
     {"peek", cmdPeek},             // display a byte of memory
     {"wpeek", cmdWpeek},           // display a word of memory
-    {"poke", cmdPoke},             // set a byte of memory
-    {"wpoke", cmdWpoke},           // set a word of memory
+    {"poke", cmdPoke},             // set a byte of ram
+    {"wpoke", cmdWpoke},           // set a word of ram
+    {"pokerom", cmdPokeRom},       // set a byte of rom
+    {"wpokerom", cmdWpokeRom},     // set a word of rom
     {"d", cmdDump},                // display a piece of memory
     {"load", cmdLoadFile},         // put a binary file in memory 
     {"ataload", cmdLoadAtariFile}, // put an Atari binary file in memory 
