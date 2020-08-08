@@ -47,22 +47,11 @@ void displayVerboseFlag()
         printf("verbose flag is OFF\n");
 }
 
-bool showConvert(word base)
+bool showConvert(word value)
 {
     int  idx;
     int  weight = 0x8000;
     bool started = false;
-    int raw_value;
-    word value;
-    
-    raw_value  = getNumber(base);
-    if(!isParameterOk())
-        return writeItpError(ITP_ERR_badNumeric);
-    
-    value = raw_value;
-    if(value != raw_value)
-        return writeItpError(ITP_ERR_outOfRange);
-        
     
     printf("hex:%X dec:%d oct:%o", value, value, value);
     
@@ -89,6 +78,23 @@ bool showConvert(word base)
     
     printf("\n");
     
+    return ITP_SUCCESS;
+}
+
+bool convert(word base)
+{
+    int raw_value;
+    word value;
+    
+    raw_value  = getNumber(base);
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+    
+    value = raw_value;
+    if(value != raw_value)
+        return writeItpError(ITP_ERR_outOfRange);
+        
+    showConvert(value);
     return ITP_SUCCESS;
 }
 
@@ -431,25 +437,36 @@ void bat(char* fname)
 
 bool cmdConvertHex()
 {
-    showConvert(16);
+    convert(16);
     return ITP_SUCCESS;
 }
 
 bool cmdConvertDec()
 {
-    showConvert(10);
+    convert(10);
     return ITP_SUCCESS;
 }
 
 bool cmdConvertOct()
 {
-    showConvert(8);
+    convert(8);
     return ITP_SUCCESS;
 }
 
 bool cmdConvertBin()
 {
-    showConvert(2);
+    convert(2);
+    return ITP_SUCCESS;
+}
+
+bool cmdConvertChar()
+{
+    char* addr = getNextParameter();
+
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badCharacter);
+    
+    showConvert(*addr);
     return ITP_SUCCESS;
 }
 
@@ -617,7 +634,37 @@ bool cmdWpoke()
     return ITP_SUCCESS;
 }
 
-bool cmdWpokeRom()
+bool cmdWPokeRom()
+{
+    word addr;
+    word value;
+    
+    addr  = getHexNumber();
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+    
+    value  = getHexNumber(); 
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_badNumeric);
+
+    memPutWRom(addr, value);
+    addr += 2;
+
+    // extra parameters
+    while(1)
+    {
+        value  = getHexNumber(); 
+        if(!isParameterOk())
+            return ITP_SUCCESS;
+
+        memPutWRom(addr, value);
+        addr += 2;
+    }
+    
+    return ITP_SUCCESS;
+}
+
+bool cmdPokeRom()
 {
     word addr;
     byte value;
@@ -630,7 +677,7 @@ bool cmdWpokeRom()
     if(!isParameterOk())
         return writeItpError(ITP_ERR_badNumeric);
 
-    memPut(addr++, value);
+    memPutRom(addr++, value);
 
     // extra parameters
     while(1)
@@ -639,45 +686,7 @@ bool cmdWpokeRom()
         if(!isParameterOk())
             return ITP_SUCCESS;
 
-        //~ memPut(addr++, value);
         memPutRom(addr++, value);
-    }
-    
-    return ITP_SUCCESS;
-}
-
-bool cmdPokeRom()
-{
-
-    return ITP_SUCCESS;
-}
-
-bool cmdWPokeRom()
-{
-
-    word addr;
-    word value;
-    
-    addr  = getHexNumber();
-    if(!isParameterOk())
-        return writeItpError(ITP_ERR_badNumeric);
-    
-    value  = getHexNumber(); 
-    if(!isParameterOk())
-        return writeItpError(ITP_ERR_badNumeric);
-
-    memPutRom(addr++, value & 255);
-    memPutRom(addr++, value / 256);
-
-    // extra parameters
-    while(1)
-    {
-        value  = getHexNumber(); 
-        if(!isParameterOk())
-            return ITP_SUCCESS;
-
-        memPutRom(addr++, value & 255);
-        memPutRom(addr++, value / 256);
     }
     
     return ITP_SUCCESS;
@@ -811,7 +820,7 @@ INTERPRETER_command listOfCommands[] =
     {"poke", cmdPoke},             // set a byte of ram
     {"wpoke", cmdWpoke},           // set a word of ram
     {"pokerom", cmdPokeRom},       // set a byte of rom
-    {"wpokerom", cmdWpokeRom},     // set a word of rom
+    {"wpokerom", cmdWPokeRom},     // set a word of rom
     {"d", cmdDump},                // display a piece of memory
     {"load", cmdLoadFile},         // put a binary file in memory 
     {"ataload", cmdLoadAtariFile}, // put an Atari binary file in memory 
@@ -828,6 +837,7 @@ INTERPRETER_command listOfCommands[] =
     {"cvd", cmdConvertDec},        // convert a decimal number
     {"cvo", cmdConvertOct},        // convert an octal number
     {"cvb", cmdConvertBin},        // convert a binary number
+    {"cvc", cmdConvertChar},       // convert a character
 
     // 6502 emulator specific instructions
     

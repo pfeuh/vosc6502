@@ -13,6 +13,7 @@ const char* ITP_errors[] =
     "Unknown command",            // 4
     "File not found",             // 5
     "Out of range input",         // 6
+    "Bad character input",        // 7
 };
 
 INTERPRETER_command* commandTable = NULL;

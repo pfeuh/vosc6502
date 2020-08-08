@@ -11,6 +11,7 @@
 #define ITP_ERR_notFound     4
 #define ITP_ERR_fileNotFound 5
 #define ITP_ERR_outOfRange   6
+#define ITP_ERR_badCharacter 7
 
 #include "types.h"
 
@@ -24,7 +25,7 @@ typedef struct
 
 extern bool setupCommandTable(INTERPRETER_command* list_of_commands);
 extern bool execCommandline();
-bool execString(char* command);
+extern bool execString(char* command);
 extern bool writeItpError(int error_num);
 
 #endif
