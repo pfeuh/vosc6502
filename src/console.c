@@ -1,11 +1,21 @@
 
 #include <string.h>
 #include "console.h"
+#include <ctype.h>
 
 char commandlineBuf[COMMANDLINE_BUF_SIZE];
 char parameterBuf[COMMANDLINE_BUF_SIZE];
 int  commandlineIndex;
 bool parameterOkFlag;
+
+void lowercaseString(char* text)
+{
+    while(*text)
+    {
+        *text = tolower(*text);
+        text++;
+    }
+}
 
 void setMonitorContext()
 {

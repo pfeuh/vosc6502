@@ -3,6 +3,9 @@
 
 #include "types.h"
 
+#define DESASS_SUCCESS false;
+#define DESASS_FAILURE true;
+
 enum displayMode
 {
 // number used in comments is decimal 4660
@@ -22,5 +25,9 @@ extern void desass(word nb_lines);
 extern void desassSetAddr(word add);
 extern word desassGetAddr();
 extern byte desassGetNextByte();
+extern bool desassAddLabel(char* _label, word addr);
+extern bool desassShowLabels();
+extern bool desassClrLabels();
+
 
 #endif

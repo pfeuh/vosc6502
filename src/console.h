@@ -44,6 +44,7 @@ extern void setMonitorContext();
 extern void setEmulatorContext();
 extern void setBreakContext();
 extern void setInterruptContext();
+extern void lowercaseString(char* text);
 
 #endif
 

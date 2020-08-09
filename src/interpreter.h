@@ -12,6 +12,7 @@
 #define ITP_ERR_fileNotFound 5
 #define ITP_ERR_outOfRange   6
 #define ITP_ERR_badCharacter 7
+#define ITP_ERR_badParam     8
 
 #include "types.h"
 

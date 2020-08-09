@@ -380,8 +380,6 @@ word memLoadFile(char* fname, word addr, byte mem_type)
             read_size += 1;
             if(!addr)
             {
-                //~ clearerr(fp);
-                //~ printf("byte ffff is loaded. feof gives %i\n", feof(fp));
                 
                 // addr has jumped from 0xffff to 0
                 if(fread(&value, sizeof(char), 1, fp))

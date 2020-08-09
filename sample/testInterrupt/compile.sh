@@ -4,7 +4,7 @@ cd ./
 
 #~ cl65 -O -t atari test.asm -o TEST.BIN
 /media/pfeuh/70b90f4a-e5a6-4a83-bf19-1feffc44cab0/PROGS/atasm106.exe -s test.asm -oTEST.BIN
-/media/pfeuh/70b90f4a-e5a6-4a83-bf19-1feffc44cab0/PROGS/atasm106.exe -lsymbols.txt -r test.asm -oROM
+/media/pfeuh/70b90f4a-e5a6-4a83-bf19-1feffc44cab0/PROGS/atasm106.exe -llabels.txt -r test.asm -oROM
 
 errnum=$?
 if test $errnum -eq 0;then

@@ -14,6 +14,7 @@ const char* ITP_errors[] =
     "File not found",             // 5
     "Out of range input",         // 6
     "Bad character input",        // 7
+    "Bad parameter(s)",           // 8
 };
 
 INTERPRETER_command* commandTable = NULL;

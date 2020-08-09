@@ -458,6 +458,77 @@ void bat(char* fname)
 /* MONITOR COMMANDS */
 /********************/
 
+bool cmdAddLabel()
+{
+    word addr;
+    char* temp_ptr;
+    char label[COMMANDLINE_BUF_SIZE];
+
+
+    temp_ptr = getNextParameter();
+    if(isParameterOk())
+    {
+        strcpy(label, temp_ptr);
+        addr = getHexNumber();
+        if(isParameterOk())
+        {
+            desassAddLabel(label, addr);
+            return ITP_SUCCESS;
+        }
+    }
+    
+    return writeItpError(ITP_ERR_badParam);
+}
+
+bool cmdClrLabels()
+{
+    desassClrLabels();
+
+    return ITP_SUCCESS;
+}
+
+bool cmdShowLabels()
+{
+    desassShowLabels();
+
+    return ITP_SUCCESS;
+}
+
+bool cmdLoadLabels()
+{
+    char* fname;
+    char line_buf[COMMANDLINE_BUF_SIZE];
+    char cmd_buf[COMMANDLINE_BUF_SIZE];
+    unsigned int addr = 0;
+    word count = 0;
+    FILE* fp;
+    //~ char garbage;
+    
+    fname  = getNextParameter(); 
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_notEnough);
+
+    fp = fopen(fname, "rb");
+    if (fp == NULL) 
+    {
+		return writeItpError(ITP_ERR_fileNotFound);
+    }
+    
+    while(fscanf(fp, "%x %s", &addr, line_buf) == 2)
+    {
+        lowercaseString(line_buf);
+        printf("addlabel %s %04x\n", line_buf, addr); 
+        sprintf(cmd_buf, "addlabel %s %04x", line_buf, addr);
+        copyCommandline(cmd_buf);
+        execCommandline();
+
+        count++;        
+    }
+
+    printf("%04x label(s) loaded\n", count);    
+    return ITP_SUCCESS;
+}
+
 bool cmdConvertHex()
 {
     convert(16);
@@ -862,6 +933,10 @@ INTERPRETER_command listOfCommands[] =
     {"cvo", cmdConvertOct},        // convert an octal number
     {"cvb", cmdConvertBin},        // convert a binary number
     {"cvc", cmdConvertChar},       // convert a character
+    {"addlabel", cmdAddLabel},     // add a label for desassembler
+    {"clrlabels", cmdClrLabels},   // empty labels' table
+    {"labels", cmdShowLabels},     // display labels' table
+    {"loadlabels", cmdLoadLabels}, // display labels' table
 
     // 6502 emulator specific instructions
     
