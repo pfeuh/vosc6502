@@ -34,7 +34,7 @@ void exitEmulation()
     else
         setMonitorContext();
 
-    desassPointer = pc;
+    setPC(desassPointer);
     printRegisters();
 }
 
@@ -128,13 +128,13 @@ bool cmdRun()
     if(!isParameterOk());
         // whithout parameter, program counter (run address) is not modified
     else
-        pc = value;
+        setPC(value);
     
     enterEmulation();
     while(1)
     {
         step6502();
-        if(memIsBreak(pc))
+        if(memIsBreak(getPC()))
             break;
     }
     exitEmulation();
@@ -150,7 +150,7 @@ bool cmdStep()
     if(!isParameterOk());
         // whithout parameter, program counter (run address) is not modified
     else
-        pc = value;
+        setPC(value);
     
     enterEmulation();
     step6502();
@@ -245,7 +245,7 @@ bool cmdStatus()
         // whithout parameter status is not modified
     else
         setStatus(value);
-    printf("%02x\n", status);
+    printf("%02x\n", getStatus());
     return ITP_SUCCESS;
 }
 
@@ -388,6 +388,19 @@ bool cmdReset()
 bool cmdInitHardware()
 {
     initHardware();
+    
+    return ITP_SUCCESS;
+}
+
+bool cmdTicks()
+{
+    dword value;
+    
+    value  = getHexNumber(); 
+    if(isParameterOk())
+        setTicks(value);
+    
+    printf("Ticks %08x  (decimal %d)\n", getTicks(), getTicks());
     
     return ITP_SUCCESS;
 }
@@ -868,6 +881,7 @@ INTERPRETER_command listOfCommands[] =
     {"seu", cmdSeu},               // set unused flag (doesn' exist in 6502)
     {"s", cmdStep},                // 6502 executes 1 instruction
     {"r", cmdRun},                 // 6502 executes without end
+    {"ticks", cmdTicks},           // display or set actual number of 6502 ticks
     
     {NULL, NULL}                   // end of commands' table 
 };

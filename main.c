@@ -5,7 +5,6 @@
 #include "emulator.h"
 #include <stdio.h>
 #include <stdlib.h>
-//~ #include <stdint.h>
 #include <string.h>
 
 #define VERSION "0.99"
@@ -13,7 +12,8 @@
 #define PROMPT ">"
 
 // TODO: BUG with io and unwired settings
-// TODO: add pokeROM/loadROM functions
+// TODO: finish timer(s) module
+// TODO: fix  warning: 'getvalue16' defined but not used [-Wunused-function]
 
 // TODO: HARDWARE
 // TODO: Real time clock
@@ -97,8 +97,9 @@ int main(int argc, char* argv[])
     setMonitorContext();
     splashScreen();
     setupCommandTable(listOfCommands);
-    parseArguments(argc, argv);
     initHardware();
+
+    parseArguments(argc, argv);
     
     appStartFlag = false;
     execString("regs");

@@ -1,0 +1,261 @@
+Modules list:
+-------------
+print.o:
+    CODE              Offs=000000  Size=000098  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000000  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000000  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(callmain.o):
+    CODE              Offs=000098  Size=000017  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000000  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000000  Size=000004  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(condes.o):
+    CODE              Offs=0000AF  Size=00000C  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000000  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000004  Size=000025  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+    ONCE              Offs=000000  Size=00000C  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(crt0.o):
+    CODE              Offs=0000BB  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000000  Size=000005  Align=00001  Fill=0000
+    DATA              Offs=000029  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+    STARTUP           Offs=000000  Size=000063  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(exehdr.o):
+    CODE              Offs=0000BB  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000005  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000029  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+    EXEHDR            Offs=000000  Size=000002  Align=00001  Fill=0000
+    MAINHDR           Offs=000000  Size=000004  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(exetrailer.o):
+    CODE              Offs=0000BB  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000005  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000029  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+    AUTOSTRT          Offs=000000  Size=000006  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(pushax.o):
+    CODE              Offs=0000BB  Size=00001A  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000005  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000029  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(system_check.o):
+    CODE              Offs=0000D5  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000005  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000029  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+    SYSCHK            Offs=000000  Size=0000F5  Align=00001  Fill=0000
+    SYSCHKHDR         Offs=000000  Size=000004  Align=00001  Fill=0000
+    SYSCHKTRL         Offs=000000  Size=000006  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(zerobss.o):
+    CODE              Offs=0000D5  Size=000023  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000005  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000029  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+/usr/share/cc65/lib/atari.lib(zeropage.o):
+    CODE              Offs=0000F8  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=000005  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000029  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=00001A  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+AUTOSTRT              000000  000005  000006  00001
+EXEHDR                000000  000001  000002  00001
+MAINHDR               000000  000003  000004  00001
+NULL                  000000  000000  000000  00001
+SYSCHKHDR             000000  000003  000004  00001
+SYSCHKTRL             000000  000005  000006  00001
+ZEROPAGE              000082  00009B  00001A  00001
+STARTUP               002000  002062  000063  00001
+ONCE                  002063  00206E  00000C  00001
+CODE                  00206F  002166  0000F8  00001
+DATA                  002167  00218F  000029  00001
+RODATA                002167  002167  000000  00001
+BSS                   002190  002194  000005  00001
+SYSCHK                002E00  002EF4  0000F5  00001
+
+
+Exports list by name:
+---------------------
+SP_save                   002190  LA    __AUTOSTART__             000001 REA    
+__BSS_LOAD__              002190 RLA    __BSS_RUN__               002190 RLA    
+__BSS_SIZE__              000005 REA    __CODE_LOAD__             00206F  LA    
+__CODE_RUN__              00206F  LA    __CODE_SIZE__             0000F8  EA    
+__CONSTRUCTOR_COUNT__     000000 REA    __CONSTRUCTOR_TABLE__     00206F RLA    
+__DESTRUCTOR_COUNT__      000000 REA    __DESTRUCTOR_TABLE__      002167 RLA    
+__EXEHDR__                000001 REA    __MAIN_FILEOFFS__         000105  EA    
+__MAIN_LAST__             002195  LA    __MAIN_SIZE__             009420  EA    
+__MAIN_START__            002000 RLA    __RESERVED_MEMORY__       000000 REA    
+__STACKSIZE__             000800 REA    __STARTADDRESS__          002000 REA    
+__STARTUP_LOAD__          002000  LA    __STARTUP_RUN__           002000  LA    
+__STARTUP_SIZE__          000063  EA    __STARTUP__               000001  EA    
+__SYSCHK_LOAD__           002E00 RLA    __SYSCHK_RUN__            002E00  LA    
+__SYSCHK_SIZE__           0000F5  EA    __SYSTEM_CHECK__          000001 REA    
+__ZP_FILEOFFS__           000000  EA    __ZP_LAST__               00009C  LA    
+__ZP_SIZE__               00007E  EA    __ZP_START__              000082  LA    
+__argc                    002167  LA    __argv                    002169  LA    
+_exit                     002041  LA    _main                     00206F RLA    
+callmain                  002107 RLA    condes                    00216B  LA    
+donelib                   00211E RLA    excexit                   002045  LA    
+initlib                   002063 RLA    ptr1                      00008A RLZ    
+ptr2                      00008C  LZ    ptr3                      00008E  LZ    
+ptr4                      000090  LZ    push0                     00212A  LA    
+pusha0                    00212C  LA    pushax                    00212E RLA    
+regbank                   000096  LZ    regsave                   000086  LZ    
+sp                        000082 RLZ    sreg                      000084  LZ    
+start                     002001 RLA    tmp1                      000092  LZ    
+tmp2                      000093  LZ    tmp3                      000094  LZ    
+tmp4                      000095  LZ    zerobss                   002144 RLA    
+
+
+
+Exports list by value:
+----------------------
+__CONSTRUCTOR_COUNT__     000000 REA    __DESTRUCTOR_COUNT__      000000 REA    
+__RESERVED_MEMORY__       000000 REA    __ZP_FILEOFFS__           000000  EA    
+__AUTOSTART__             000001 REA    __EXEHDR__                000001 REA    
+__STARTUP__               000001  EA    __SYSTEM_CHECK__          000001 REA    
+__BSS_SIZE__              000005 REA    __STARTUP_SIZE__          000063  EA    
+__ZP_SIZE__               00007E  EA    __ZP_START__              000082  LA    
+sp                        000082 RLZ    sreg                      000084  LZ    
+regsave                   000086  LZ    ptr1                      00008A RLZ    
+ptr2                      00008C  LZ    ptr3                      00008E  LZ    
+ptr4                      000090  LZ    tmp1                      000092  LZ    
+tmp2                      000093  LZ    tmp3                      000094  LZ    
+tmp4                      000095  LZ    regbank                   000096  LZ    
+__ZP_LAST__               00009C  LA    __SYSCHK_SIZE__           0000F5  EA    
+__CODE_SIZE__             0000F8  EA    __MAIN_FILEOFFS__         000105  EA    
+__STACKSIZE__             000800 REA    __MAIN_START__            002000 RLA    
+__STARTADDRESS__          002000 REA    __STARTUP_LOAD__          002000  LA    
+__STARTUP_RUN__           002000  LA    start                     002001 RLA    
+_exit                     002041  LA    excexit                   002045  LA    
+initlib                   002063 RLA    __CODE_LOAD__             00206F  LA    
+__CODE_RUN__              00206F  LA    __CONSTRUCTOR_TABLE__     00206F RLA    
+_main                     00206F RLA    callmain                  002107 RLA    
+donelib                   00211E RLA    push0                     00212A  LA    
+pusha0                    00212C  LA    pushax                    00212E RLA    
+zerobss                   002144 RLA    __DESTRUCTOR_TABLE__      002167 RLA    
+__argc                    002167  LA    __argv                    002169  LA    
+condes                    00216B  LA    SP_save                   002190  LA    
+__BSS_LOAD__              002190 RLA    __BSS_RUN__               002190 RLA    
+__MAIN_LAST__             002195  LA    __SYSCHK_LOAD__           002E00 RLA    
+__SYSCHK_RUN__            002E00  LA    __MAIN_SIZE__             009420  EA    
+
+
+
+Imports list:
+-------------
+SP_save (crt0.o):
+__AUTOSTART__ (exetrailer.o):
+    [linker generated]        /usr/share/cc65/cfg/atari.cfg(7)
+__BSS_LOAD__ ([linker generated]):
+    exehdr.o                  atari/exehdr.s(4)
+__BSS_RUN__ ([linker generated]):
+    zerobss.o                 common/zerobss.s(8)
+    system_check.o            atari/system_check.s(24)
+__BSS_SIZE__ ([linker generated]):
+    zerobss.o                 common/zerobss.s(8)
+    system_check.o            atari/system_check.s(24)
+__CODE_LOAD__ ([linker generated]):
+__CODE_RUN__ ([linker generated]):
+__CODE_SIZE__ ([linker generated]):
+__CONSTRUCTOR_COUNT__ ([linker generated]):
+    condes.o                  runtime/condes.s(18)
+__CONSTRUCTOR_TABLE__ ([linker generated]):
+    condes.o                  runtime/condes.s(18)
+__DESTRUCTOR_COUNT__ ([linker generated]):
+    condes.o                  runtime/condes.s(19)
+__DESTRUCTOR_TABLE__ ([linker generated]):
+    condes.o                  runtime/condes.s(19)
+__EXEHDR__ (exehdr.o):
+    [linker generated]        /usr/share/cc65/cfg/atari.cfg(5)
+__MAIN_FILEOFFS__ ([linker generated]):
+__MAIN_LAST__ ([linker generated]):
+__MAIN_SIZE__ ([linker generated]):
+__MAIN_START__ ([linker generated]):
+    exehdr.o                  atari/exehdr.s(4)
+__RESERVED_MEMORY__ ([linker generated]):
+    crt0.o                    atari/crt0.s(16)
+    system_check.o            atari/system_check.s(26)
+    [linker generated]        /usr/share/cc65/cfg/atari.cfg(25)
+__STACKSIZE__ ([linker generated]):
+    system_check.o            atari/system_check.s(25)
+    [linker generated]        /usr/share/cc65/cfg/atari.cfg(25)
+__STARTADDRESS__ ([linker generated]):
+    system_check.o            atari/system_check.s(21)
+__STARTUP_LOAD__ ([linker generated]):
+__STARTUP_RUN__ ([linker generated]):
+__STARTUP_SIZE__ ([linker generated]):
+__STARTUP__ (crt0.o):
+__SYSCHK_LOAD__ ([linker generated]):
+    system_check.o            atari/system_check.s(20)
+__SYSCHK_RUN__ ([linker generated]):
+__SYSCHK_SIZE__ ([linker generated]):
+__SYSTEM_CHECK__ (system_check.o):
+    [linker generated]        /usr/share/cc65/cfg/atari.cfg(6)
+__ZP_FILEOFFS__ ([linker generated]):
+__ZP_LAST__ ([linker generated]):
+__ZP_SIZE__ ([linker generated]):
+__ZP_START__ ([linker generated]):
+__argc (callmain.o):
+__argv (callmain.o):
+_exit (crt0.o):
+_main (print.o):
+    callmain.o                runtime/callmain.s(11)
+callmain (callmain.o):
+    crt0.o                    atari/crt0.s(15)
+condes (condes.o):
+donelib (condes.o):
+    crt0.o                    atari/crt0.s(14)
+excexit (crt0.o):
+initlib (condes.o):
+    crt0.o                    atari/crt0.s(14)
+ptr1 (zeropage.o):
+    zerobss.o                 common/zerobss.s(9)
+ptr2 (zeropage.o):
+ptr3 (zeropage.o):
+ptr4 (zeropage.o):
+push0 (pushax.o):
+pusha0 (pushax.o):
+pushax (pushax.o):
+    callmain.o                runtime/callmain.s(11)
+regbank (zeropage.o):
+regsave (zeropage.o):
+sp (zeropage.o):
+    pushax.o                  runtime/pushax.s(8)
+    crt0.o                    /build/cc65-u5XJyk/cc65-2.16/asminc/zeropage.inc(11)
+sreg (zeropage.o):
+start (crt0.o):
+    exetrailer.o              atari/exetrailer.s(4)
+tmp1 (zeropage.o):
+tmp2 (zeropage.o):
+tmp3 (zeropage.o):
+tmp4 (zeropage.o):
+zerobss (zerobss.o):
+    crt0.o                    atari/crt0.s(15)
+

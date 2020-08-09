@@ -3,13 +3,14 @@
 #include "emulator.h"
 #include "memory.h"
 #include "desass6502.h"
+#include "fake6502.h"
 
-uint8_t read6502(uint16_t address)
+byte read6502(word address)
 {
     return memGet(address);
 }
 
-void write6502(uint16_t address, uint8_t value)
+void write6502(word address, byte value)
 {
     memPut(address, value);
 }
@@ -55,6 +56,11 @@ void printRegisters()
 void setPC(word addr)
 {
     pc = addr;
+}
+
+word getPC()
+{
+    return pc;
 }
 
 void setSP(byte value)
@@ -115,4 +121,74 @@ bool hasInterrupt()
 bool hasBreak()
 {
     return ((FLAG_BREAK & status) != 0);
+}
+
+void setinterrupt()
+{
+    status |= FLAG_INTERRUPT;
+}
+
+void setcarry()
+{
+    status |= FLAG_CARRY;
+}
+
+void clearcarry()
+{
+    status &= (~FLAG_CARRY);
+}
+
+void setzero()
+{
+    status |= FLAG_ZERO;
+}
+
+void clearzero()
+{
+    status &= (~FLAG_ZERO);
+}
+
+void clearinterrupt()
+{
+    status &= (~FLAG_INTERRUPT);
+}
+
+void setdecimal()
+{
+    status |= FLAG_DECIMAL;
+}
+
+void cleardecimal()
+{
+    status &= (~FLAG_DECIMAL);
+}
+
+void setoverflow()
+{
+    status |= FLAG_OVERFLOW;
+}
+
+void clearoverflow()
+{
+    status &= (~FLAG_OVERFLOW);
+}
+
+void setsign()
+{
+    status |= FLAG_SIGN;
+}
+
+void clearsign()
+{
+    status &= (~FLAG_SIGN);
+}
+
+dword getTicks()
+{
+    return clockticks6502;
+}
+
+void setTicks(dword value)
+{
+    clockticks6502 = value;
 }
