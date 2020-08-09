@@ -16,11 +16,6 @@ extern dword getTicks();
 extern void setTicks(dword value);
 
 
-extern void clearbreak();
-extern void setbreak();
-extern void clearunused();
-extern void setunused();
-
 extern bool hasInterrupt();
 extern bool hasBreak();
 
@@ -44,11 +39,11 @@ extern void setoverflow();
 extern void clearoverflow();
 extern void setsign();
 extern void clearsign();
-// doesnt exist in 6502 but usefull for debugging
-extern void clc();
-extern void cld();
-extern void cli();
-extern void clv();
+// doesnt exist in 6502 but useful for debugging
+extern void clearbreak();
+extern void setbreak();
+extern void clearunused();
+extern void setunused();
 
 #endif
 
