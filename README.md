@@ -1,6 +1,7 @@
-# vosc6502
+vosc6502
 Virtual Old School Computer with a 6502
-Emulation of a full 6502 virtual computer
+
+Emulation and debugger for a 6502 virtual computer. Virtual means that it doesn't exists... But it couldl. Easy to build, easy to use.
 
 U N D E R -  H E A V Y - D E V E L O P M E N T !
 
