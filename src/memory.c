@@ -377,6 +377,19 @@ word memLoadFile(char* fname, word addr, byte mem_type)
                 default:
                     break;
             }
+            read_size += 1;
+            if(!addr)
+            {
+                //~ clearerr(fp);
+                //~ printf("byte ffff is loaded. feof gives %i\n", feof(fp));
+                
+                // addr has jumped from 0xffff to 0
+                if(fread(&value, sizeof(char), 1, fp))
+                {
+                    printf("File too big! Extra byte(s) ignored.\n");
+                    break;
+                }
+            }
         }
     }
     

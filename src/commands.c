@@ -34,7 +34,7 @@ void exitEmulation()
     else
         setMonitorContext();
 
-    setPC(desassPointer);
+    desassPointer = getPC();
     printRegisters();
 }
 
@@ -405,6 +405,16 @@ bool cmdTicks()
     return ITP_SUCCESS;
 }
 
+bool cmdIrq()
+{
+    irq6502();
+    printf("interruption request sent\n");
+    setInterruptContext();
+    cmdPrintRegisters();
+    
+    return ITP_SUCCESS;
+}
+
 /************************/
 /* end of 6502 commands */
 /************************/
@@ -752,6 +762,7 @@ bool cmdLoadFile()
         addr = 0;
     
     size = memLoadFile(fname, addr, MEMORY_RAM);
+        
     if(!size)
         return writeItpError(ITP_ERR_fileNotFound);
     printf("%d bytes loaded\n", size);    
@@ -882,6 +893,7 @@ INTERPRETER_command listOfCommands[] =
     {"s", cmdStep},                // 6502 executes 1 instruction
     {"r", cmdRun},                 // 6502 executes without end
     {"ticks", cmdTicks},           // display or set actual number of 6502 ticks
+    {"irq", cmdIrq},               // display or set actual number of 6502 ticks
     
     {NULL, NULL}                   // end of commands' table 
 };
