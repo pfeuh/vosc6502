@@ -43,7 +43,7 @@ void find(byte* pattern, word pattern_size)
         addr++;
     }
     if(total)
-        printf("%04X occurences found\n", total);
+        printf("- %04X occurences found\n", total);
     else
         printf("nothing found\n");
 }

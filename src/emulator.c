@@ -68,6 +68,10 @@ void setSP(byte value)
     sp = value;
 }
 
+byte getSP()
+{
+    return sp;
+}
 void setA(byte value)
 {
     a = value;

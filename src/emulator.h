@@ -7,6 +7,7 @@ extern void printRegisters();
 extern void setPC(word addr);
 extern word getPC();
 extern void setSP(byte value);
+extern byte getSP();
 extern void setA(byte value);
 extern void setX(byte value);
 extern void setY(byte value);

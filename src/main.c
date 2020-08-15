@@ -14,7 +14,8 @@
 // TODO: BUG with io and unwired settings
 // TODO: finish timer(s) module
 // TODO: fix  warning: 'getvalue16' defined but not used [-Wunused-function]
-// TODO: implement command over() for jum over a jsr in step by step mode
+// TODO: implement command over() for jump over a jsr in step by step mode
+// TODO: check command cmdStack a little bit
 
 // TODO: HARDWARE
 // TODO: Real time clock

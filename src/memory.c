@@ -395,6 +395,58 @@ word memLoadFile(char* fname, word addr, byte mem_type)
 	return read_size;
 }
 
+word memLoadRomFile(char* fname, byte mem_type)
+{
+    FILE *fp;
+    word read_size;
+    byte value;
+    word addr;
+    
+    fp = fopen(fname, "rb");
+    if (fp == NULL) 
+    {
+		return 0;
+    }
+
+    fseek(fp, 0L, SEEK_END);
+    read_size = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+    addr = 0 - read_size;
+    read_size = 0;
+    
+    while(!feof(fp))
+    {
+        if(fread(&value, sizeof(char), 1, fp))
+        {
+            switch(mem_type)
+            {
+                case MEMORY_RAM:
+                    memPut(addr++, value);
+                    break;
+                case MEMORY_ROM:
+                    memPutRom(addr++, value);
+                    break;
+                default:
+                    break;
+            }
+            read_size += 1;
+            if(!addr)
+            {
+                
+                // addr has jumped from 0xffff to 0
+                if(fread(&value, sizeof(char), 1, fp))
+                {
+                    printf("File too big! Extra byte(s) ignored.\n");
+                    break;
+                }
+            }
+        }
+    }
+    
+	fclose(fp);
+	return read_size;
+}
+
 word memLoadAtariFile(char* fname)
 {
     FILE *fp;

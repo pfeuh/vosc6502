@@ -643,6 +643,34 @@ bool cmdDump()
     return ITP_SUCCESS;
 }
 
+bool cmdDumpPlus()
+{
+    dumpPointer += dumpSize;
+    dump(dumpPointer, memGet, dumpSize);
+    
+    return ITP_SUCCESS;
+}
+
+bool cmdDumpMinus()
+{
+    dumpPointer -= dumpSize;
+    dump(dumpPointer, memGet, dumpSize);
+    
+    return ITP_SUCCESS;
+}
+
+bool cmdStack()
+{
+    word addr = 0xff + getSP();
+    
+    printf("TOP ");
+    while(addr < 0x200)
+        printf("%02x ", memGet(addr++));
+    printf("BOTTOM\n");
+    
+    return ITP_SUCCESS;
+}
+
 bool cmdPeek()
 {
     word addr;
@@ -900,6 +928,27 @@ bool cmdLoadAtariFile()
     return ITP_SUCCESS;
 }
 
+bool cmdLoadRomFile()
+{
+    char* temp_ptr;
+    char fname[COMMANDLINE_BUF_SIZE];
+    word size;
+    
+    
+    temp_ptr  = getNextParameter(); 
+    if(!isParameterOk())
+        return writeItpError(ITP_ERR_notEnough);
+
+    strcpy(fname, temp_ptr);
+    
+    size = memLoadRomFile(fname, MEMORY_ROM);
+        
+    if(!size)
+        return writeItpError(ITP_ERR_fileNotFound);
+    printf("%d bytes loaded\n", size);    
+    return ITP_SUCCESS;
+}
+
 bool cmdQuitApp()
 {
     exit(0);
@@ -917,8 +966,11 @@ INTERPRETER_command listOfCommands[] =
     {"pokerom", cmdPokeRom},       // set a byte of rom
     {"wpokerom", cmdWPokeRom},     // set a word of rom
     {"d", cmdDump},                // display a piece of memory
+    {"d+", cmdDumpPlus},           // display next piece of memory
+    {"d-", cmdDumpMinus},          // display previous piece of memory
     {"load", cmdLoadFile},         // put a binary file in memory 
-    {"ataload", cmdLoadAtariFile}, // put an Atari binary file in memory 
+    {"ataload", cmdLoadAtariFile}, // put an Atari binary file in memory
+    {"loadrom", cmdLoadRomFile},   // load a rom on top of the memory
     {"sb", cmdSetBreak},           // set/clear a breakpoint
     {"lb", cmdListBreaks},         // list all breakpoints
     {"cb", cmdClrBreaks},          // clear all breakpoints
@@ -969,6 +1021,7 @@ INTERPRETER_command listOfCommands[] =
     {"r", cmdRun},                 // 6502 executes without end
     {"ticks", cmdTicks},           // display or set actual number of 6502 ticks
     {"irq", cmdIrq},               // display or set actual number of 6502 ticks
+    {"stack", cmdStack},           // display stack from top to bottom 
     
     {NULL, NULL}                   // end of commands' table 
 };

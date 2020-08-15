@@ -52,6 +52,7 @@ extern void memPutRom(word addr, byte value);
 extern void memPutWRom(word addr, word value);
 
 extern word memLoadFile(char* fname, word addr, byte mem_type);
+extern word memLoadRomFile(char* fname, byte mem_type);
 extern word memLoadAtariFile(char* fname);
 
 #endif
