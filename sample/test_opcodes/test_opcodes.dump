@@ -1,0 +1,219 @@
+206f 00           brk 
+2070 01 70        ora ($70,x)
+2072 05 7d        ora $7d
+2074 06 a7        asl $a7
+2076 08           php 
+2077 09 41        ora #$41
+2079 0a           asl a
+207a 0d 50 a7     ora $a750
+207d 0e a4 8f     asl $8fa4
+2080 10 fe        bpl $2080
+2082 11 66        ora ($66),y
+2084 15 e0        ora $e0,x
+2086 16 9f        asl $9f,x
+2088 18           clc 
+2089 19 10 5c     ora $5c10,y
+208c 1d 07 a2     ora $a207,x
+208f 1e 04 74     asl $7404,x
+2092 20 11 ab     jsr $ab11
+2095 21 06        and ($06,x)
+2097 24 20        bit $20
+2099 25 a4        and $a4
+209b 26 c6        rol $c6
+209d 28           plp 
+209e 29 0f        and #$0f
+20a0 2a           rol a
+20a1 2c 2e e2     bit $e22e
+20a4 2d 8a d7     and $d78a
+20a7 2e 42 c8     rol $c842
+20aa 30 fe        bmi $20aa
+20ac 31 61        and ($61),y
+20ae 35 47        and $47,x
+20b0 36 d2        rol $d2,x
+20b2 38           sec 
+20b3 39 14 d4     and $d414,y
+20b6 1d 71 07     ora $0771,x
+20b9 1e bb 6a     asl $6abb,x
+20bc 40           rti 
+20bd 41 5b        eor ($5b,x)
+20bf 45 0c        eor $0c
+20c1 46 00        lsr $00
+20c3 48           pha 
+20c4 49 b4        eor #$b4
+20c6 4a           lsr a
+20c7 4c d4 7f     jmp $7fd4
+20ca 4d 56 0e     eor $0e56
+20cd 4e f3 7f     lsr $7ff3
+20d0 50 fe        bvc $20d0
+20d2 51 d3        eor ($d3),y
+20d4 55 d9        eor $d9,x
+20d6 56 6e        lsr $6e,x
+20d8 58           cli 
+20d9 59 5c e8     eor $e85c,y
+20dc 5d 95 cc     eor $cc95,x
+20df 5e 4e 11     lsr $114e,x
+20e2 60           rts 
+20e3 61 12        adc ($12,x)
+20e5 65 60        adc $60
+20e7 66 82        ror $82
+20e9 68           pla 
+20ea 69 83        adc #$83
+20ec 6a           ror a
+20ed 6c 69 cc     jmp ($cc69)
+20f0 6d 3f a1     adc $a13f
+20f3 6e 57 b7     ror $b757
+20f6 b0 fe        bcs $20f6
+20f8 71 45        adc ($45),y
+20fa 75 4a        adc $4a,x
+20fc 76 8e        ror $8e,x
+20fe 78           sei 
+20ff 79 a9 7f     adc $7fa9,y
+2102 7d 75 21     adc $2175,x
+2105 7e 89 ef     ror $ef89,x
+2108 81 5c        sta ($5c,x)
+210a 84 ee        sty $ee
+210c 85 3e        sta $3e
+210e 86 80        stx $80
+2110 88           dey 
+2111 8a           txa 
+2112 8c a3 4a     sty $4aa3
+2115 8d 92 5b     sta $5b92
+2118 8e c8 06     stx $06c8
+211b 90 fe        bcc $211b
+211d 91 b9        sta ($b9),y
+211f 94 f2        sty $f2,x
+2121 95 50        sta $50,x
+2123 96 05        stx $05,y
+2125 98           tya 
+2126 99 36 67     sta $6736,y
+2129 9a           txs 
+212a 9d 91 23     sta $2391,x
+212d a0 c1        ldy #$c1
+212f a1 d1        lda ($d1,x)
+2131 a2 a5        ldx #$a5
+2133 a4 be        ldy $be
+2135 a5 e4        lda $e4
+2137 a6 bf        ldx $bf
+2139 a8           tay 
+213a a9 5c        lda #$5c
+213c aa           tax 
+213d ac d8 e8     ldy $e8d8
+2140 ad 32 d4     lda $d432
+2143 ae 37 63     ldx $6337
+2146 b0 fe        bcs $2146
+2148 b1 73        lda ($73),y
+214a b4 d0        ldy $d0,x
+214c b5 67        lda $67,x
+214e b6 b1        ldx $b1,y
+2150 b8           clv 
+2151 b9 3c b4     lda $b43c,y
+2154 ba           tsx 
+2155 bc ca 07     ldy $07ca,x
+2158 bd fe 6a     lda $6afe,x
+215b be 7a d7     ldx $d77a,y
+215e c0 cb        cpy #$cb
+2160 c1 15        cmp ($15,x)
+2162 c4 84        cpy $84
+2164 c5 ad        cmp $ad
+2166 c6 c0        dec $c0
+2168 c8           iny 
+2169 c9 5d        cmp #$5d
+216b ca           dex 
+216c cc 39 0a     cpy $0a39
+216f cd 80 46     cmp $4680
+2172 ce 17 d0     dec $d017
+2175 d0 fe        bne $2175
+2177 d1 5a        cmp ($5a),y
+2179 d5 8d        cmp $8d,x
+217b d6 4c        dec $4c,x
+217d d8           cld 
+217e d9 a5 35     cmp $35a5,y
+2181 dd 75 9f     cmp $9f75,x
+2184 de e6 57     dec $57e6,x
+2187 e0 52        cpx #$52
+2189 e1 57        sbc ($57,x)
+218b e4 59        cpx $59
+218d e5 fe        sbc $fe
+218f e6 4c        inc $4c
+2191 e8           inx 
+2192 e9 df        sbc #$df
+2194 ea           nop 
+2195 ec ea f5     cpx $f5ea
+2198 ed 0d 4a     sbc $4a0d
+219b ee 5b f1     inc $f15b
+219e f0 fe        beq $219e
+21a0 f1 54        sbc ($54),y
+21a2 f5 18        sbc $18,x
+21a4 f6 41        inc $41,x
+21a6 f8           sed 
+21a7 f9 76 ad     sbc $ad76,y
+21aa fd e1 fd     sbc $fde1,x
+21ad fe 2d 8c     inc $8c2d,x
+21b0 ad 10 22     lda $2210
+21b3 ae 11 22     ldx $2211
+21b6 20 d7 21     jsr $21d7
+21b9 ad 12 22     lda $2212
+21bc ae 13 22     ldx $2213
+21bf 20 d7 21     jsr $21d7
+21c2 a0 04        ldy #$04
+21c4 4c 6f 20     jmp $206f
+21c7 a0 00        ldy #$00
+21c9 f0 07        beq $21d2
+21cb a9 10        lda #$10
+21cd a2 22        ldx #$22
+21cf 4c 14 22     jmp $2214
+21d2 60           rts 
+21d3 a9 00        lda #$00
+21d5 a2 00        ldx #$00
+21d7 48           pha 
+21d8 a5 82        lda $82
+21da 38           sec 
+21db e9 02        sbc #$02
+21dd 85 82        sta $82
+21df b0 02        bcs $21e3
+21e1 c6 83        dec $83
+21e3 a0 01        ldy #$01
+21e5 8a           txa 
+21e6 91 82        sta ($82),y
+21e8 68           pla 
+21e9 88           dey 
+21ea 91 82        sta ($82),y
+21ec 60           rts 
+21ed a9 39        lda #$39
+21ef 85 8a        sta $8a
+21f1 a9 22        lda #$22
+21f3 85 8b        sta $8b
+21f5 a9 00        lda #$00
+21f7 a8           tay 
+21f8 a2 00        ldx #$00
+21fa f0 0a        beq $2206
+21fc 91 8a        sta ($8a),y
+21fe c8           iny 
+21ff d0 fb        bne $21fc
+2201 e6 8b        inc $8b
+2203 ca           dex 
+2204 d0 f6        bne $21fc
+2206 c0 05        cpy #$05
+2208 f0 05        beq $220f
+220a 91 8a        sta ($8a),y
+220c c8           iny 
+220d d0 f7        bne $2206
+220f 60           rts 
+2210 00           brk 
+2211 00           brk 
+2212 00           brk 
+2213 00           brk 
+2214 8d 22 22     sta $2222
+2217 8e 23 22     stx $2223
+221a 8d 29 22     sta $2229
+221d 8e 2a 22     stx $222a
+2220 88           dey 
+2221 b9 ff ff     lda $ffff,y
+2224 8d 33 22     sta $2233
+2227 88           dey 
+2228 b9 ff ff     lda $ffff,y
+222b 8d 32 22     sta $2232
+222e 8c 35 22     sty $2235
+2231 20 ff ff     jsr $ffff
+2234 a0 ff        ldy #$ff
+2236 d0 e8        bne $2220

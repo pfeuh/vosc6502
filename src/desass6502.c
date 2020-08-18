@@ -1,5 +1,6 @@
 
 #include "desass6502.h"
+#include "desass6502tables.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -139,6 +140,12 @@ void inherent()
     printf("\n");
 }
 
+void accumulator()
+{
+    Add1Value();
+    printf("a\n");
+}
+
 void zeropage()
 {
     desassB2 = desassGetNextByte();
@@ -152,7 +159,7 @@ void zeropagex()
     desassB2 = desassGetNextByte();
     Add2Values();
     byte2hex(desassB2);
-    printf(",X\n");
+    printf(",x\n");
 }
 
 void zeropagey()
@@ -160,7 +167,7 @@ void zeropagey()
     desassB2 = desassGetNextByte();
     Add2Values();
     byte2hex(desassB2);
-    printf(",Y\n");
+    printf(",y\n");
 }
 
 void indzerox()
@@ -169,7 +176,7 @@ void indzerox()
     Add2Values();
     printf("(");
     byte2hex(desassB2);
-    printf(",X)\n");
+    printf(",x)\n");
 }
 
 void indzeroy()
@@ -178,7 +185,7 @@ void indzeroy()
     Add2Values();
     printf("(");
     byte2hex(desassB2);
-    printf("),Y\n");
+    printf("),y\n");
 }
 
 void absolute()
@@ -196,7 +203,7 @@ void absolx()
     desassB3 = desassGetNextByte();
     Add3Values();
     word2hex(desassB3*256+desassB2);
-    printf(",X\n");
+    printf(",x\n");
 }
 
 void absoly()
@@ -205,7 +212,7 @@ void absoly()
     desassB3 = desassGetNextByte();
     Add3Values();
     word2hex(desassB3*256+desassB2);
-    printf(",Y\n");
+    printf(",y\n");
 }
 
 void indirect()
@@ -292,59 +299,59 @@ bool desassClrLabels()
     return DESASS_SUCCESS;
 }
 
-const char* mnemo[] =
-{
-    "brk", "ora", "???", "???", "???", "ora", "asl", "???", "php", "ora", "asl", "???", "???", "ora", "asl", "???", 
-    "bpl", "ora", "???", "???", "???", "ora", "asl", "???", "clc", "ora", "???", "???", "???", "ora", "asl", "???", 
-    "jsr", "and", "???", "???", "bit", "and", "rol", "???", "plp", "and", "rol", "???", "bit", "and", "rol", "???", 
-    "bmi", "and", "???", "???", "???", "and", "rol", "???", "sec", "and", "???", "???", "???", "ora", "asl", "???", 
-    "rti", "eor", "???", "???", "???", "eor", "lsr", "???", "pha", "eor", "lsr", "???", "jmp", "eor", "lsr", "???", 
-    "bvc", "eor", "???", "???", "???", "eor", "lsr", "???", "cli", "eor", "???", "???", "???", "eor", "lsr", "???", 
-    "rts", "adc", "???", "???", "???", "adc", "ror", "???", "pla", "adc", "ror", "???", "jmp", "adc", "ror", "???", 
-    "bcs", "adc", "???", "???", "???", "adc", "ror", "???", "sei", "adc", "???", "???", "???", "adc", "ror", "???", 
-    "???", "sta", "???", "???", "sty", "sta", "stx", "???", "dey", "???", "txa", "???", "sty", "sta", "stx", "???", 
-    "bcc", "sta", "???", "???", "sty", "sta", "stx", "???", "tya", "sta", "txs", "???", "???", "sta", "???", "???", 
-    "ldy", "lda", "ldx", "???", "ldy", "lda", "ldx", "???", "tay", "lda", "tax", "???", "ldy", "lda", "ldx", "???", 
-    "bcs", "lda", "???", "???", "ldy", "lda", "ldx", "???", "clv", "lda", "tsx", "???", "ldy", "lda", "ldx", "???", 
-    "cpy", "cmp", "???", "???", "cpy", "cmp", "dec", "???", "iny", "cmp", "dex", "???", "cpy", "cmp", "dec", "???", 
-    "bne", "cmp", "???", "???", "???", "cmp", "dec", "???", "cld", "cmp", "???", "???", "???", "cmp", "dec", "???", 
-    "cpx", "sbc", "???", "???", "cpx", "sbc", "inc", "???", "inx", "sbc", "nop", "sbc", "cpx", "sbc", "inc", "???", 
-    "beq", "sbc", "???", "???", "???", "sbc", "inc", "???", "sed", "sbc", "???", "???", "???", "sbc", "inc", "???", 
-};
+//~ const char* mnemo[] =
+//~ {
+    //~ "brk", "ora", "???", "???", "???", "ora", "asl", "???", "php", "ora", "asl", "???", "???", "ora", "asl", "???", 
+    //~ "bpl", "ora", "???", "???", "???", "ora", "asl", "???", "clc", "ora", "???", "???", "???", "ora", "asl", "???", 
+    //~ "jsr", "and", "???", "???", "bit", "and", "rol", "???", "plp", "and", "rol", "???", "bit", "and", "rol", "???", 
+    //~ "bmi", "and", "???", "???", "???", "and", "rol", "???", "sec", "and", "???", "???", "???", "ora", "asl", "???", 
+    //~ "rti", "eor", "???", "???", "???", "eor", "lsr", "???", "pha", "eor", "lsr", "???", "jmp", "eor", "lsr", "???", 
+    //~ "bvc", "eor", "???", "???", "???", "eor", "lsr", "???", "cli", "eor", "???", "???", "???", "eor", "lsr", "???", 
+    //~ "rts", "adc", "???", "???", "???", "adc", "ror", "???", "pla", "adc", "ror", "???", "jmp", "adc", "ror", "???", 
+    //~ "bcs", "adc", "???", "???", "???", "adc", "ror", "???", "sei", "adc", "???", "???", "???", "adc", "ror", "???", 
+    //~ "???", "sta", "???", "???", "sty", "sta", "stx", "???", "dey", "???", "txa", "???", "sty", "sta", "stx", "???", 
+    //~ "bcc", "sta", "???", "???", "sty", "sta", "stx", "???", "tya", "sta", "txs", "???", "???", "sta", "???", "???", 
+    //~ "ldy", "lda", "ldx", "???", "ldy", "lda", "ldx", "???", "tay", "lda", "tax", "???", "ldy", "lda", "ldx", "???", 
+    //~ "bcs", "lda", "???", "???", "ldy", "lda", "ldx", "???", "clv", "lda", "tsx", "???", "ldy", "lda", "ldx", "???", 
+    //~ "cpy", "cmp", "???", "???", "cpy", "cmp", "dec", "???", "iny", "cmp", "dex", "???", "cpy", "cmp", "dec", "???", 
+    //~ "bne", "cmp", "???", "???", "???", "cmp", "dec", "???", "cld", "cmp", "???", "???", "???", "cmp", "dec", "???", 
+    //~ "cpx", "sbc", "???", "???", "cpx", "sbc", "inc", "???", "inx", "sbc", "nop", "sbc", "cpx", "sbc", "inc", "???", 
+    //~ "beq", "sbc", "???", "???", "???", "sbc", "inc", "???", "sed", "sbc", "???", "???", "???", "sbc", "inc", "???", 
+//~ };
 
-void(*hook[])(void) = 
-{
-    inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent,
-    inherent,   immediate,  inherent,   inherent,   inherent,   absolute,   absolute,   inherent,
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
-    absolute,   indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent,
-    inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
-    inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent,
-    inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
-    inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent,
-    inherent,   immediate,  inherent,   inherent,   indirect,   absolute,   absolute,   inherent,
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
-    inherent,   indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent,
-    inherent,   inherent,   inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagey,  inherent,
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     inherent,   inherent,
-    immediate,  indzerox,   immediate,  inherent,   zeropage,   zeropage,   zeropage,   inherent,
-    inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
-    relative,   indzeroy,   inherent,   inherent,   zeropagex,  zeropagex,  zeropagey,  inherent,
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absoly,     inherent,
-    immediate,  indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent,
-    inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
-    immediate,  indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent,
-    inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
-};
+//~ void(*hook[])(void) = 
+//~ {
+    //~ inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent,
+    //~ inherent,   immediate,  inherent,   inherent,   inherent,   absolute,   absolute,   inherent,
+    //~ relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
+    //~ inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
+    //~ absolute,   indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent,
+    //~ inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
+    //~ relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
+    //~ inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
+    //~ inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent,
+    //~ inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
+    //~ relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
+    //~ inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
+    //~ inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent,
+    //~ inherent,   immediate,  inherent,   inherent,   indirect,   absolute,   absolute,   inherent,
+    //~ relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
+    //~ inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
+    //~ inherent,   indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent,
+    //~ inherent,   inherent,   inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
+    //~ relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagey,  inherent,
+    //~ inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     inherent,   inherent,
+    //~ immediate,  indzerox,   immediate,  inherent,   zeropage,   zeropage,   zeropage,   inherent,
+    //~ inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
+    //~ relative,   indzeroy,   inherent,   inherent,   zeropagex,  zeropagex,  zeropagey,  inherent,
+    //~ inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absoly,     inherent,
+    //~ immediate,  indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent,
+    //~ inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
+    //~ relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
+    //~ inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
+    //~ immediate,  indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent,
+    //~ inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent,
+    //~ relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent,
+    //~ inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent,
+//~ };
 
