@@ -5,19 +5,19 @@
 /* VERSION 1.0 - 19/08/2020 */
 /****************************/
 
-extern void immediate();
-extern void inherent();
-extern void accumulator();
-extern void zeropage();
-extern void zeropagex();
-extern void zeropagey();
-extern void indzerox();
-extern void indzeroy();
-extern void absolute();
-extern void absolx();
-extern void absoly();
-extern void indirect();
-extern void relative();
+extern void Immediate();
+extern void Implied ();
+extern void Accumulator();
+extern void ZeroPage();
+extern void ZeroPageX();
+extern void ZeroPageY();
+extern void IndirectX();
+extern void IndirectY();
+extern void Absolute();
+extern void AbsoluteX();
+extern void AbsoluteY();
+extern void Indirect();
+extern void Relative();
 
 const char* mnemo[] =
 {
@@ -41,38 +41,38 @@ const char* mnemo[] =
 
 void(*hook[])(void) = 
 {
-    inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent, // 0x00
-    inherent,   immediate,  accumulator,inherent,   inherent,   absolute,   absolute,   inherent, // 0x08
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent, // 0x10
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent, // 0x18
-    absolute,   indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent, // 0x20
-    inherent,   immediate,  accumulator,inherent,   absolute,   absolute,   absolute,   inherent, // 0x28
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent, // 0x30
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent, // 0x38
-    inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent, // 0x40
-    inherent,   immediate,  accumulator,inherent,   absolute,   absolute,   absolute,   inherent, // 0x48
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent, // 0x50
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent, // 0x58
-    inherent,   indzerox,   inherent,   inherent,   inherent,   zeropage,   zeropage,   inherent, // 0x60
-    inherent,   immediate,  accumulator,inherent,   indirect,   absolute,   absolute,   inherent, // 0x68
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent, // 0x70
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent, // 0x78
-    inherent,   indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent, // 0x80
-    inherent,   inherent,   inherent,   inherent,   absolute,   absolute,   absolute,   inherent, // 0x88
-    relative,   indzeroy,   inherent,   inherent,   zeropagex,  zeropagex,  zeropagey,  inherent, // 0x90
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     inherent,   inherent, // 0x98
-    immediate,  indzerox,   immediate,  inherent,   zeropage,   zeropage,   zeropage,   inherent, // 0xa0
-    inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent, // 0xa8
-    relative,   indzeroy,   inherent,   inherent,   zeropagex,  zeropagex,  zeropagey,  inherent, // 0xb0
-    inherent,   absoly,     inherent,   inherent,   absolx,     absolx,     absoly,     inherent, // 0xb8
-    immediate,  indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent, // 0xc0
-    inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent, // 0xc8
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent, // 0xd0
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent, // 0xd8
-    immediate,  indzerox,   inherent,   inherent,   zeropage,   zeropage,   zeropage,   inherent, // 0xe0
-    inherent,   immediate,  inherent,   inherent,   absolute,   absolute,   absolute,   inherent, // 0xe8
-    relative,   indzeroy,   inherent,   inherent,   inherent,   zeropagex,  zeropagex,  inherent, // 0xf0
-    inherent,   absoly,     inherent,   inherent,   inherent,   absolx,     absolx,     inherent  // 0xf8
+    Implied ,   IndirectX,   Implied ,  Implied ,   Implied ,   ZeroPage,   ZeroPage,   Implied , // 0x00
+    Implied ,   Immediate,  Accumulator,Implied ,   Implied ,   Absolute,   Absolute,   Implied , // 0x08
+    Relative,   IndirectY,  Implied ,   Implied ,   Implied ,   ZeroPageX,  ZeroPageX,  Implied , // 0x10
+    Implied ,   AbsoluteY,  Implied ,   Implied ,   Implied ,   AbsoluteX,  AbsoluteX,  Implied , // 0x18
+    Absolute,   IndirectX,  Implied ,   Implied ,   ZeroPage,   ZeroPage,   ZeroPage,   Implied , // 0x20
+    Implied ,   Immediate,  Accumulator,Implied ,   Absolute,   Absolute,   Absolute,   Implied , // 0x28
+    Relative,   IndirectY,  Implied ,   Implied ,   Implied ,   ZeroPageX,  ZeroPageX,  Implied , // 0x30
+    Implied ,   AbsoluteY,  Implied ,   Implied ,   Implied ,   AbsoluteX,  AbsoluteX,  Implied , // 0x38
+    Implied ,   IndirectX,  Implied ,   Implied ,   Implied ,   ZeroPage,   ZeroPage,   Implied , // 0x40
+    Implied ,   Immediate,  Accumulator,Implied ,   Absolute,   Absolute,   Absolute,   Implied , // 0x48
+    Relative,   IndirectY,  Implied ,   Implied ,   Implied ,   ZeroPageX,  ZeroPageX,  Implied , // 0x50
+    Implied ,   AbsoluteY,  Implied ,   Implied ,   Implied ,   AbsoluteX,  AbsoluteX,  Implied , // 0x58
+    Implied ,   IndirectX,  Implied ,   Implied ,   Implied ,   ZeroPage,   ZeroPage,   Implied , // 0x60
+    Implied ,   Immediate,  Accumulator,Implied ,   Indirect,   Absolute,   Absolute,   Implied , // 0x68
+    Relative,   IndirectY,  Implied ,   Implied ,   Implied ,   ZeroPageX,  ZeroPageX,  Implied , // 0x70
+    Implied ,   AbsoluteY,  Implied ,   Implied ,   Implied ,   AbsoluteX,  AbsoluteX,  Implied , // 0x78
+    Implied ,   IndirectX,  Implied ,   Implied ,   ZeroPage,   ZeroPage,   ZeroPage,   Implied , // 0x80
+    Implied ,   Implied ,   Implied ,   Implied ,   Absolute,   Absolute,   Absolute,   Implied , // 0x88
+    Relative,   IndirectY,  Implied ,   Implied ,   ZeroPageX,  ZeroPageX,  ZeroPageY,  Implied , // 0x90
+    Implied ,   AbsoluteY,  Implied ,   Implied ,   Implied ,   AbsoluteX,  Implied ,   Implied , // 0x98
+    Immediate,  IndirectX,  Immediate,  Implied ,   ZeroPage,   ZeroPage,   ZeroPage,   Implied , // 0xa0
+    Implied ,   Immediate,  Implied ,   Implied ,   Absolute,   Absolute,   Absolute,   Implied , // 0xa8
+    Relative,   IndirectY,  Implied ,   Implied ,   ZeroPageX,  ZeroPageX,  ZeroPageY,  Implied , // 0xb0
+    Implied ,   AbsoluteY,  Implied ,   Implied ,   AbsoluteX,  AbsoluteX,  AbsoluteY,  Implied , // 0xb8
+    Immediate,  IndirectX,  Implied ,   Implied ,   ZeroPage,   ZeroPage,   ZeroPage,   Implied , // 0xc0
+    Implied ,   Immediate,  Implied ,   Implied ,   Absolute,   Absolute,   Absolute,   Implied , // 0xc8
+    Relative,   IndirectY,  Implied ,   Implied ,   Implied ,   ZeroPageX,  ZeroPageX,  Implied , // 0xd0
+    Implied ,   AbsoluteY,  Implied ,   Implied ,   Implied ,   AbsoluteX,  AbsoluteX,  Implied , // 0xd8
+    Immediate,  IndirectX,  Implied ,   Implied ,   ZeroPage,   ZeroPage,   ZeroPage,   Implied , // 0xe0
+    Implied ,   Immediate,  Implied ,   Implied ,   Absolute,   Absolute,   Absolute,   Implied , // 0xe8
+    Relative,   IndirectY,  Implied ,   Implied ,   Implied ,   ZeroPageX,  ZeroPageX,  Implied , // 0xf0
+    Implied ,   AbsoluteY,  Implied ,   Implied ,   Implied ,   AbsoluteX,  AbsoluteX,  Implied   // 0xf8
 };
 
 #endif

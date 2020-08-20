@@ -1,0 +1,282 @@
+    1                                   ; Compile me using "rmac -l6502tester.lst 6502tester.s" and open
+    2                                   ; 6502tester.lst to see and compare the output opcodes
+    3                                   
+    4                                       .6502
+    5                                   
+    6                                   label:
+    7                                   
+    8                                   ;ADC (ADd with Carry)
+    9                                   
+   10                                   ;   SYNTAX     HEX LEN   MODE        
+   11  00000000  6944                    ADC #$44      ;$69  2   Immediate    
+   12  00000002  6544                    ADC $44       ;$65  2   Zero Page    
+   13  00000004  7544                    ADC $44,X     ;$75  2   Zero Page,X  
+   14  00000006  6D0044                  ADC $4400     ;$6D  3   Absolute     
+   15  00000009  7D0044                  ADC $4400,X   ;$7D  3   Absolute,X   
+   16  0000000C  790044                  ADC $4400,Y   ;$79  3   Absolute,Y   
+   17  0000000F  6144                    ADC ($44,X)   ;$61  2   Indirect,X   
+   18  00000011  7144                    ADC ($44),Y   ;$71  2   Indirect,Y   
+   19                                   
+   20                                   ;AND (bitwise AND with accumulator) 
+   21                                   
+   22                                   ;  SYNTAX       HEX LEN  MODE
+   23  00000013  2944                    AND #$44      ;$29  2   Immediate
+   24  00000015  2544                    AND $44       ;$25  2   Zero Page
+   25  00000017  3544                    AND $44,X     ;$35  2   Zero Page,X
+   26  00000019  2D0044                  AND $4400     ;$2D  3   Absolute
+   27  0000001C  3D0044                  AND $4400,X   ;$3D  3   Absolute,X
+   28  0000001F  390044                  AND $4400,Y   ;$39  3   Absolute,Y
+   29  00000022  2144                    AND ($44,X)   ;$21  2   Indirect,X
+   30  00000024  3144                    AND ($44),Y   ;$31  2   Indirect,Y
+   31                                   
+   32                                   ;ASL (Arithmetic Shift Left) 
+   33                                   
+   34                                   ;  SYNTAX       HEX LEN 	 MODE        
+   35  00000026  0A                      ASL           ;$0A  1    Accumulator (Implied)
+   36  00000027  0644                    ASL $44       ;$06  2    Zero Page    
+   37  00000029  1644                    ASL $44,X     ;$16  2    Zero Page,X  
+   38  0000002B  0E0044                  ASL $4400     ;$0E  3    Absolute     
+   39  0000002E  1E0044                  ASL $4400,X   ;$1E  3    Absolute,X   
+   40                                   
+   41                                   ;BIT (test BITs) 
+   42                                   
+   43                                   ;   SYNTAX       HEX LEN	MODE        
+   44  00000031  2444                    BIT $44       ;$24  2      Zero Page    
+   45  00000033  2C0044                  BIT $4400     ;$2C  3      Absolute     
+   46                                   
+   47                                   ;Branch Instructions
+   48                                   
+   49                                   ;MNEMONIC   HEX
+   50  00000036  10C8                   BPL label 		;$10  (Branch on PLus)          
+   51  00000038  30C6                   BMI label 		;$30  (Branch on MInus)         
+   52  0000003A  50C4                   BVC label 		;$50  (Branch on oVerflow Clear)
+   53  0000003C  70C2                   BVS label 		;$70  (Branch on oVerflow Set)  
+   54  0000003E  90C0                   BCC label 		;$90  (Branch on Carry Clear)   
+   55  00000040  B0BE                   BCS label 		;$B0  (Branch on Carry Set)     
+   56  00000042  D0BC                   BNE label 		;$D0  (Branch on Not Equal)     
+   57  00000044  F0BA                   BEQ label 		;$F0  (Branch on EQual)         
+   58                                   
+   59                                   ;BRK (BReaK) 
+   60                                   ;  SYNTAX       HEX LEN 	;MODE         
+   61  00000046  00                      BRK           ;$00  1   ;Implied      
+   62                                   
+   63                                   ;CMP (CoMPare accumulator) 
+   64                                   
+   65                                   ;  SYNTAX       HEX LEN MODE         
+   66  00000047  C944                    CMP #$44      ;$C9  2   Immediate    
+   67  00000049  C544                    CMP $44       ;$C5  2   Zero Page    
+   68  0000004B  D544                    CMP $44,X     ;$D5  2   Zero Page,X  
+   69  0000004D  CD0044                  CMP $4400     ;$CD  3   Absolute     
+   70  00000050  DD0044                  CMP $4400,X   ;$DD  3   Absolute,X   
+   71  00000053  D90044                  CMP $4400,Y   ;$D9  3   Absolute,Y   
+   72  00000056  C144                    CMP ($44,X)   ;$C1  2   Indirect,X   
+   73  00000058  D144                    CMP ($44),Y   ;$D1  2   Indirect,Y   
+   74                                   
+   75                                   ;CPX (ComPare X register) 
+   76                                   
+   77                                   ;  SYNTAX       HEX LEN MODE         
+   78  0000005A  E044                    CPX #$44      ;$E0  2  Immediate    
+   79  0000005C  E444                    CPX $44       ;$E4  2  Zero Page    
+   80  0000005E  EC0044                  CPX $4400     ;$EC  3  Absolute     
+   81                                   
+   82                                   ;CPY (ComPare Y register) 
+   83                                   
+   84                                   ;  SYNTAX       HEX LEN MODE         
+   85  00000061  C044                    CPY #$44      ;$C0  2  Immediate    
+   86  00000063  C444                    CPY $44       ;$C4  2  Zero Page    
+   87  00000065  CC0044                  CPY $4400     ;$CC  3  Absolute     
+   88                                   
+   89                                   ;DEC (DECrement memory) 
+   90                                   
+   91                                   ;  SYNTAX       HEX LEN MODE         
+   92  00000068  C644                    DEC $44       ;$C6  2  Zero Page    
+   93  0000006A  D644                    DEC $44,X     ;$D6  2  Zero Page,X  
+   94  0000006C  CE0044                  DEC $4400     ;$CE  3  Absolute     
+   95  0000006F  DE0044                  DEC $4400,X   ;$DE  3  Absolute,X   
+   96                                   
+   97                                   ;EOR (bitwise Exclusive OR) 
+   98                                   
+   99                                   ;  SYNTAX       HEX LEN MODE         
+  100  00000072  4944                    EOR #$44      ;$49  2  Immediate    
+  101  00000074  4544                    EOR $44       ;$45  2  Zero Page    
+  102  00000076  5544                    EOR $44,X     ;$55  2  Zero Page,X  
+  103  00000078  4D0044                  EOR $4400     ;$4D  3  Absolute     
+  104  0000007B  5D0044                  EOR $4400,X   ;$5D  3  Absolute,X   
+  105  0000007E  590044                  EOR $4400,Y   ;$59  3  Absolute,Y   
+  106  00000081  4144                    EOR ($44,X)   ;$41  2  Indirect,X   
+  107  00000083  5144                    EOR ($44),Y   ;$51  2  Indirect,Y   
+  108                                   
+  109                                   ;Flag (Processor Status) Instructions
+  110                                   
+  111                                   ;MNEMONIC                       HEX
+  112  00000085  18                     CLC ;(CLear Carry)              $18
+  113  00000086  38                     SEC ;(SEt Carry)                $38
+  114  00000087  58                     CLI ;(CLear Interrupt)          $58
+  115  00000088  78                     SEI ;(SEt Interrupt)            $78
+  116  00000089  B8                     CLV ;(CLear oVerflow)           $B8
+  117  0000008A  D8                     CLD ;(CLear Decimal)            $D8
+  118  0000008B  F8                     SED ;(SEt Decimal)              $F8
+  119                                   
+  120                                   ;INC (INCrement memory) 
+  121                                   
+  122                                   ;  SYNTAX       HEX LEN MODE         
+  123  0000008C  E644                    INC $44       ;$E6  2  ;Zero Page    
+  124  0000008E  F644                    INC $44,X     ;$F6  2  ;Zero Page,X  
+  125  00000090  EE0044                  INC $4400     ;$EE  3  ;Absolute     
+  126  00000093  FE0044                  INC $4400,X   ;$FE  3  ;Absolute,X   
+  127                                    
+  128                                   ;JMP (JuMP) 
+  129                                   
+  130                                   ;  SYNTAX       HEX LEN MODE         
+  131  00000096  4C9755                  JMP $5597     ;$4C  3  Absolute     
+  132  00000099  6C9755                  JMP ($5597)   ;$6C  3  Indirect     
+  133                                   
+  134                                   ;JSR (Jump to SubRoutine) 
+  135                                   
+  136                                   ;  SYNTAX       HEX LEN MODE         
+  137  0000009C  209755                  JSR $5597     ;$20  3  Absolute     
+  138                                   
+  139                                   ;LDA (LoaD Accumulator) 
+  140                                   
+  141                                   ;  SYNTAX       HEX LEN MODE         
+  142  0000009F  A944                    LDA #$44      ;$A9  2  Immediate    
+  143  000000A1  A544                    LDA $44       ;$A5  2  Zero Page    
+  144  000000A3  B544                    LDA $44,X     ;$B5  2  Zero Page,X  
+  145  000000A5  AD0044                  LDA $4400     ;$AD  3  Absolute     
+  146  000000A8  BD0044                  LDA $4400,X   ;$BD  3  Absolute,X   
+  147  000000AB  B90044                  LDA $4400,Y   ;$B9  3  Absolute,Y   
+  148  000000AE  A144                    LDA ($44,X)   ;$A1  2  Indirect,X   
+  149  000000B0  B144                    LDA ($44),Y   ;$B1  2  Indirect,Y   
+  150                                   
+  151                                   ;LDX (LoaD X register) 
+  152                                   
+  153                                   ;  SYNTAX       HEX LEN MODE         
+  154  000000B2  A244                    LDX #$44      ;$A2  2  Immediate    
+  155  000000B4  A644                    LDX $44       ;$A6  2  Zero Page    
+  156  000000B6  B644                    LDX $44,Y     ;$B6  2  Zero Page,Y  
+  157  000000B8  AE0044                  LDX $4400     ;$AE  3  Absolute     
+  158  000000BB  BE0044                  LDX $4400,Y   ;$BE  3  Absolute,Y   
+  159                                   
+  160                                   ;LDY (LoaD Y register) 
+  161                                   
+  162                                   ;  SYNTAX       HEX LEN MODE         
+  163  000000BE  A044                    LDY #$44      ;$A0  2  Immediate    
+  164  000000C0  A444                    LDY $44       ;$A4  2  Zero Page    
+  165  000000C2  B444                    LDY $44,X     ;$B4  2  Zero Page,X  
+  166  000000C4  AC0044                  LDY $4400     ;$AC  3  Absolute     
+  167  000000C7  BC0044                  LDY $4400,X   ;$BC  3  Absolute,X   
+  168                                   
+  169                                   ;LSR (Logical Shift Right) 
+  170                                   
+  171                                   ;  SYNTAX       HEX LEN MODE         
+  172  000000CA  4A                      LSR           ;$4A  1  Accumulator (Implied)
+  173  000000CB  4644                    LSR $44       ;$46  2  Zero Page    
+  174  000000CD  5644                    LSR $44,X     ;$56  2  Zero Page,X  
+  175  000000CF  4E0044                  LSR $4400     ;$4E  3  Absolute     
+  176  000000D2  5E0044                  LSR $4400,X   ;$5E  3  Absolute,X   
+  177                                   
+  178                                   ;NOP (No OPeration) 
+  179                                   
+  180                                   ;  SYNTAX       HEX LEN MODE         
+  181  000000D5  EA                      NOP           ;$EA  1  Implied      
+  182                                   
+  183                                   ;ORA (bitwise OR with Accumulator) 
+  184                                   
+  185                                   ;  SYNTAX       HEX LEN MODE         
+  186  000000D6  0944                    ORA #$44      ;$09  2  Immediate    
+  187  000000D8  0544                    ORA $44       ;$05  2  Zero Page    
+  188  000000DA  1544                    ORA $44,X     ;$15  2  Zero Page,X  
+  189  000000DC  0D0044                  ORA $4400     ;$0D  3  Absolute     
+  190  000000DF  1D0044                  ORA $4400,X   ;$1D  3  Absolute,X   
+  191  000000E2  190044                  ORA $4400,Y   ;$19  3  Absolute,Y   
+  192  000000E5  0144                    ORA ($44,X)   ;$01  2  Indirect,X   
+  193  000000E7  1144                    ORA ($44),Y   ;$11  2  Indirect,Y   
+  194                                   
+  195                                   ;Register Instructions 
+  196                                   
+  197                                   ;MNEMONIC                 HEX
+  198  000000E9  AA                     TAX ;(Transfer A to X)    $AA
+  199  000000EA  8A                     TXA ;(Transfer X to A)    $8A
+  200  000000EB  CA                     DEX ;(DEcrement X)        $CA
+  201  000000EC  E8                     INX ;(INcrement X)        $E8
+  202  000000ED  A8                     TAY ;(Transfer A to Y)    $A8
+  203  000000EE  98                     TYA ;(Transfer Y to A)    $98
+  204  000000EF  88                     DEY ;(DEcrement Y)        $88
+  205  000000F0  C8                     INY ;(INcrement Y)        $C8
+  206                                     
+  207                                   ;ROL (ROtate Left) 
+  208                                   
+  209                                   ;  SYNTAX       HEX LEN MODE         
+  210  000000F1  2A                      ROL           ;$2A  1  Accumulator (Implied)
+  211  000000F2  2644                    ROL $44       ;$26  2  Zero Page    
+  212  000000F4  3644                    ROL $44,X     ;$36  2  Zero Page,X  
+  213  000000F6  2E0044                  ROL $4400     ;$2E  3  Absolute     
+  214  000000F9  3E0044                  ROL $4400,X   ;$3E  3  Absolute,X   
+  215                                   
+  216                                   ;ROR (ROtate Right) 
+  217                                   
+  218                                   ;  SYNTAX       HEX LEN MODE         
+  219  000000FC  6A                      ROR           ;$6A  1  Accumulator (Implied)
+  220  000000FD  6644                    ROR $44       ;$66  2  Zero Page    
+  221  000000FF  7644                    ROR $44,X     ;$76  2  Zero Page,X  
+  222  00000101  6E0044                  ROR $4400     ;$6E  3  Absolute     
+  223  00000104  7E0044                  ROR $4400,X   ;$7E  3  Absolute,X   
+  224                                   
+  225                                   ;RTI (ReTurn from Interrupt) 
+  226                                   
+  227                                   ;  SYNTAX       HEX LEN MODE         
+  228  00000107  40                      RTI           ;$40  1  Implied      
+  229                                   
+  230                                   ;RTS (ReTurn from Subroutine) 
+  231                                   
+  232                                   ;  SYNTAX       HEX LEN MODE         
+  233  00000108  60                      RTS           ;$60  1  Implied      
+  234                                   
+  235                                   ;SBC (SuBtract with Carry)
+  236                                   
+  237                                   ;  SYNTAX       HEX LEN MODE         
+  238  00000109  E944                    SBC #$44      ;$E9  2  Immediate    
+  239  0000010B  E544                    SBC $44       ;$E5  2  Zero Page    
+  240  0000010D  F544                    SBC $44,X     ;$F5  2  Zero Page,X  
+  241  0000010F  ED0044                  SBC $4400     ;$ED  3  Absolute     
+  242  00000112  FD0044                  SBC $4400,X   ;$FD  3  Absolute,X   
+  243  00000115  F90044                  SBC $4400,Y   ;$F9  3  Absolute,Y   
+  244  00000118  E144                    SBC ($44,X)   ;$E1  2  Indirect,X   
+  245  0000011A  F144                    SBC ($44),Y   ;$F1  2  Indirect,Y   
+  246                                   
+  247                                   ;STA (STore Accumulator) 
+  248                                   
+  249                                   ;  SYNTAX       HEX LEN MODE         
+  250  0000011C  8544                    STA $44       ;$85  2  Zero Page    
+  251  0000011E  9544                    STA $44,X     ;$95  2  Zero Page,X  
+  252  00000120  8D0044                  STA $4400     ;$8D  3  Absolute     
+  253  00000123  9D0044                  STA $4400,X   ;$9D  3  Absolute,X   
+  254  00000126  990044                  STA $4400,Y   ;$99  3  Absolute,Y   
+  255  00000129  8144                    STA ($44,X)   ;$81  2  Indirect,X   
+  256  0000012B  9144                    STA ($44),Y   ;$91  2  Indirect,Y   
+  257                                   
+  258                                   ;Stack Instructions
+  259                                   ;MNEMONIC                        HEX 
+  260  0000012D  9A                     TXS ;(Transfer X to Stack ptr)   $9A 
+  261  0000012E  BA                     TSX ;(Transfer Stack ptr to X)   $BA 
+  262  0000012F  48                     PHA ;(PusH Accumulator)          $48 
+  263  00000130  68                     PLA ;(PuLl Accumulator)          $68 
+  264  00000131  08                     PHP ;(PusH Processor status)     $08 
+  265  00000132  28                     PLP ;(PuLl Processor status)     $28 
+  266                                   
+  267                                   ;STX (STore X register)
+  268                                   
+  269                                   ;  SYNTAX       HEX LEN MODE         
+  270  00000133  8644                    STX $44       ;$86  2  ;Zero Page    
+  271  00000135  9644                    STX $44,Y     ;$96  2  ;Zero Page,Y  
+  272  00000137  8E0044                  STX $4400     ;$8E  3  ;Absolute     
+  273                                     
+  274                                   ;STY (STore Y register)
+  275                                   
+  276                                   ;  SYNTAX       HEX LEN MODE         
+  277  0000013A  8444                    STY $44       ;$84  2  ;Zero Page    
+  278  0000013C  9444                    STY $44,X     ;$94  2  ;Zero Page,X  
+  279  0000013E  8C0044                  STY $4400     ;$8C  3  ;Absolute     
+
+             label 00000000  a 
+
