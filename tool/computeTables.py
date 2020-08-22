@@ -225,7 +225,65 @@ def tableElementReplace(table, old, new):
     for index, item in enumerate(table):
         if item == old:
             table[index] = new
+
+def getAsmLine(value, opcode, mode):
+    line = "%s "%opcode.upper()
+    
+    if mode == "Implied":
+        return line
+    elif mode == "Accumulator":
+        return line + "A"
+    elif mode == "Immediate":
+        return line + "#$44"
+    elif mode == "ZeroPage":
+        return line + "$44"
+    elif mode == "ZeroPageX":
+        return line + "$44,X"
+    elif mode == "ZeroPageY":
+        return line + "$44,Y"
+    elif mode == "Absolute":
+        return line + "$4400"
+    elif mode == "AbsoluteX":
+        return line + "$4400,X"
+    elif mode == "AbsoluteY":
+        return line + "$4400,Y"
+    elif mode == "Indirect":
+        return line + "($4400)"
+    elif mode == "IndirectX":
+        return line + "($44,X)"
+    elif mode == "IndirectY":
+        return line + "($44),Y"
+    elif mode == "Relative":
+        return line + "$1234"
+    else:
+        raise Exception("%02x %s %s : WTF???"%(value, opcode, mode))
+    return line
+
+def generatePythonChart(opcodes, modes, fp):
+    line = ";"
+    for x in range(16):
+        line += "x%X;"%x
+    writeln(line, fp)
+
+    for x in range(256):
+        if not x % 16:
+            line2 = "%Xx;"%(x/16)
+            line1 = ";"
+            
+        mnemo = opcodes[x][1:-1]
+        mode = modes[x]
         
+        if mnemo != "???":
+            line1 += "%s;"%modes[x]
+            line2 += "%s;"%getAsmLine(x, mnemo, mode)
+        else:
+            line1 += ";"
+            line2 += ";"
+        
+        if (x % 16) == 15:
+            writeln(line1, fp)
+            writeln(line2, fp)
+            writeln(";", fp)
 
 if __name__ == "__main__":
 
@@ -260,4 +318,5 @@ if __name__ == "__main__":
     tableElementReplace(modes, "relative", "Relative")
     with open("../../../../python/atasmPrecompiler/tables6502.py", "w") as fp:
         generatePythonTables(opcodes, modes, fp)
-        #~ generatePythonTables(opcodes, modes)
+    with open("../../../../python/atasmPrecompiler/utest/chart6502.csv", "w") as fp:
+        generatePythonChart(opcodes, modes, fp)
