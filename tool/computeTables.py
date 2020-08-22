@@ -128,6 +128,15 @@ def generatePythonTables(table1, table2, fp=sys.stdout):
     assert len(code_sizes) == 256
     makeTable(code_sizes, "CODE_SIZES", fp=fp, nb_cols=16, quote=False, width=4)
     
+    with open("opcodes_map.txt", "wb") as fp:
+        for opcode in range(256):
+            mode = table2[opcode]
+            mnemo = table1[opcode][1:-1]
+            if mnemo == '???':
+                mnemo = '---'
+                mode = '---'
+            writeln("%02x %s %s"%(opcode, mnemo, mode), fp=fp)
+
 def createTestProgram(opcodes, modes, fp=sys.stdout):
     writeln("\n    ; -------------------------------------- ;", fp)
     writeln("    ;  this program is supposed to use all   ;", fp)

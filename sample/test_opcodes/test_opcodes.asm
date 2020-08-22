@@ -73,8 +73,8 @@ LABEL_04:
                  ; opcode $3a (illegal)
                  ; opcode $3b (illegal)
                  ; opcode $3c (illegal)
-    ORA ???      ; opcode $3d
-    ASL ???      ; opcode $3e
+    AND ???      ; opcode $3d
+    ROL ???      ; opcode $3e
                  ; opcode $3f (illegal)
 LABEL_05:
     RTI ???      ; opcode $40
@@ -128,7 +128,7 @@ LABEL_07:
     ROR ???      ; opcode $6e
                  ; opcode $6f (illegal)
 LABEL_08:
-    BCS ???      ; opcode $70
+    BVS ???      ; opcode $70
     ADC ???      ; opcode $71
                  ; opcode $72 (illegal)
                  ; opcode $73 (illegal)
