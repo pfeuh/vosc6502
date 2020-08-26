@@ -128,6 +128,33 @@ def generatePythonTables(table1, table2, fp=sys.stdout):
     assert len(code_sizes) == 256
     makeTable(code_sizes, "CODE_SIZES", fp=fp, nb_cols=16, quote=False, width=4)
     
+    opcodes.sort()
+    for opcode in opcodes:
+        temp_list = []
+        for x in range(256):
+            mnemo = table1[x][1:-1]
+            mode = table2[x].upper()
+            if mnemo == opcode:
+                if not mode in temp_list:
+                    temp_list.append(mode)
+        makeTable(temp_list, "%s_MODES"%opcode.upper(), fp=fp, nb_cols=16, quote=False, width=4)    
+
+    for opcode in opcodes:
+        temp_list = []
+        for x in range(256):
+            mnemo = table1[x][1:-1]
+            mode = table2[x].upper()
+            if mnemo == opcode:
+                if not mode in temp_list:
+                    temp_list.append(mode)
+        makeTable(temp_list, "%s_MODES"%opcode.upper(), fp=fp, nb_cols=16, quote=False, width=4)    
+
+
+    fp.write("MODES_BY_MNEMONIC = {\n")
+    for opcode in opcodes:
+        fp.write("    '%s':%s_MODES,\n"%(opcode, opcode.upper()))
+    fp.write("    }\n")
+    
     with open("opcodes_map.txt", "wb") as fp:
         for opcode in range(256):
             mode = table2[opcode]
@@ -259,7 +286,7 @@ def getAsmLine(value, opcode, mode):
         raise Exception("%02x %s %s : WTF???"%(value, opcode, mode))
     return line
 
-def generatePythonChart(opcodes, modes, fp):
+def generateOpcodesChart(opcodes, modes, fp):
     line = ";"
     for x in range(16):
         line += "x%X;"%x
@@ -284,6 +311,40 @@ def generatePythonChart(opcodes, modes, fp):
             writeln(line1, fp)
             writeln(line2, fp)
             writeln(";", fp)
+
+def generateModesChart(opcodes, modes, fp):
+    chart = {}
+    for opcode in opcodes:
+            mnemonic = opcode[1:-1]
+            if mnemonic != "???":
+                if mnemonic in chart.keys():
+                    pass
+                else:
+                    chart[mnemonic] = []
+
+    for index, opcode in enumerate(opcodes):
+            mnemonic = opcode[1:-1]
+            if mnemonic != "???":
+                if mnemonic in chart.keys():
+                    chart[mnemonic].append(modes[index])
+                    
+                    
+    modes_list = []
+    for x in range(256):
+        if not modes[x] in modes_list:
+            modes_list.append(modes[x])
+
+    keys = chart.keys()
+    keys.sort()
+    for key in keys:
+        fp.write("%s;"%key.upper())
+        line = chart[key]
+        for mode in modes_list:
+            if mode in line:
+                fp.write("%s;"%mode)
+            else:
+                fp.write(";")
+        fp.write("\n")
 
 if __name__ == "__main__":
 
@@ -319,4 +380,6 @@ if __name__ == "__main__":
     with open("../../../../python/atasmPrecompiler/tables6502.py", "w") as fp:
         generatePythonTables(opcodes, modes, fp)
     with open("../../../../python/atasmPrecompiler/utest/chart6502.csv", "w") as fp:
-        generatePythonChart(opcodes, modes, fp)
+        generateOpcodesChart(opcodes, modes, fp)
+    with open("../../../../python/atasmPrecompiler/utest/modes6502.csv", "w") as fp:
+        generateModesChart(opcodes, modes, fp)
